@@ -1,0 +1,443 @@
+[
+  {
+    "node_type": "Element",
+    "name": "collision",
+    "details_raw": "\n Required:  * Type:  Default:  \n ",
+    "description": "The collision properties of a link. Note that this can be different from the visual properties of a link, for example, simpler collision models are often used to reduce computation time.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "name",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "Unique name for the collision element within the scope of the parent link.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "laser_retro",
+        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+        "description": "intensity value returned by laser sensor.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "max_contacts",
+        "details_raw": "\n Required:  0 Type:  int Default:  10 \n ",
+        "description": "Maximum number of contacts allowed between two entities. This value overrides the max_contacts element defined in physics.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "density",
+        "details_raw": "\n Required:  0 Type:  double Default:  1000 \n ",
+        "description": "Mass Density of the collision geometry. This is used to determine mass and inertia values during automatic calculation. Default is the density of water 1000 kg/m^3.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "auto_inertia_params",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Parent tag to hold user-defined custom params for mesh inertia calculator",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "pose",
+        "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+        "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "relative_to",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "rotation_format",
+            "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+            "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "degrees",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "geometry",
+        "details_raw": "\n Required:  1 Type:  Default:  \n ",
+        "description": "The shape of the visual or collision object.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "surface",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "The surface parameters",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "bounce",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "restitution_coefficient",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Bounciness coefficient of restitution, from [0...1], where 0=no bounciness.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "threshold",
+                "details_raw": "\n Required:  0 Type:  double Default:  100000 \n ",
+                "description": "Bounce capture velocity, below which effective coefficient of restitution is 0.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "friction",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "torsional",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "Parameters for torsional friction",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "coefficient",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "Torsional friction coefficient, unitless maximum ratio of tangential stress to normal stress.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "use_patch_radius",
+                    "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+                    "description": "If this flag is true, torsional friction is calculated using the \"patch_radius\" parameter. If this flag is set to false, \"surface_radius\" (R) and contact depth (d) are used to compute the patch radius as sqrt(R*d).",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "patch_radius",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Radius of contact patch surface.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "surface_radius",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Surface radius on the point of contact.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "ode",
+                    "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                    "description": "Torsional friction parameters for ODE",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "slip",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "Force dependent slip for torsional friction, equivalent to inverse of viscous damping coefficient with units of rad/s/(Nm). A slip value of 0 is infinitely viscous.",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "ode",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "ODE friction parameters",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "mu",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "Coefficient of friction in first friction pyramid direction, the unitless maximum ratio of force in first friction pyramid direction to normal force.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "mu2",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "Coefficient of friction in second friction pyramid direction, the unitless maximum ratio of force in second friction pyramid direction to normal force.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "fdir1",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Unit vector specifying first friction pyramid direction in collision-fixed reference frame. If the friction pyramid model is in use, and this value is set to a unit vector for one of the colliding surfaces, the ODE Collide callback function will align the friction pyramid directions with a reference frame fixed to that collision surface. If both surfaces have this value set to a vector of zeros, the friction pyramid directions will be aligned with the world frame. If this value is set for both surfaces, the behavior is undefined.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "slip1",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Force dependent slip in first friction pyramid direction, equivalent to inverse of viscous damping coefficient with units of m/s/N. A slip value of 0 is infinitely viscous.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "slip2",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Force dependent slip in second friction pyramid direction, equivalent to inverse of viscous damping coefficient with units of m/s/N. A slip value of 0 is infinitely viscous.",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "bullet",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "friction",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "Coefficient of friction in first friction pyramid direction, the unitless maximum ratio of force in first friction pyramid direction to normal force.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "friction2",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "Coefficient of friction in second friction pyramid direction, the unitless maximum ratio of force in second friction pyramid direction to normal force.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "fdir1",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Unit vector specifying first friction pyramid direction in collision-fixed reference frame. If the friction pyramid model is in use, and this value is set to a unit vector for one of the colliding surfaces, the friction pyramid directions will be aligned with a reference frame fixed to that collision surface. If both surfaces have this value set to a vector of zeros, the friction pyramid directions will be aligned with the world frame. If this value is set for both surfaces, the behavior is undefined.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "rolling_friction",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "Coefficient of rolling friction",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "contact",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "collide_without_contact",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Flag to disable contact force generation, while still allowing collision checks and contact visualization to occur.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "collide_without_contact_bitmask",
+                "details_raw": "\n Required:  0 Type:  unsigned int Default:  1 \n ",
+                "description": "Bitmask for collision filtering when collide_without_contact is on",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "collide_bitmask",
+                "details_raw": "\n Required:  0 Type:  unsigned int Default:  65535 \n ",
+                "description": "Bitmask for collision filtering. This will override collide_without_contact. Parsed as 16-bit unsigned integer.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "category_bitmask",
+                "details_raw": "\n Required:  0 Type:  unsigned int Default:  65535 \n ",
+                "description": "Bitmask for category of collision filtering. Collision happens if ((category1 & collision2) | (category2 & collision1)) is not zero. If not specified, the category_bitmask should be interpreted as being the same as collide_bitmask. Parsed as 16-bit unsigned integer.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "poissons_ratio",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.29999999999999999 \n ",
+                "description": "Poisson's ratio is the unitless ratio between transverse and axial strain. This value must lie between (-1, 0.5). Defaults to 0.3 for typical steel. Note typical silicone elastomers have Poisson's ratio near 0.49 ~ 0.50. For reference, approximate values for Material:(Young's Modulus, Poisson's Ratio) for some of the typical materials are: Plastic: (1e8 ~ 3e9 Pa, 0.35 ~ 0.41), Wood: (4e9 ~ 1e10 Pa, 0.22 ~ 0.50), Aluminum: (7e10 Pa, 0.32 ~ 0.35), Steel: (2e11 Pa, 0.26 ~ 0.31).",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "elastic_modulus",
+                "details_raw": "\n Required:  0 Type:  double Default:  -1 \n ",
+                "description": "Young's Modulus in SI derived unit Pascal. Defaults to -1. If value is less or equal to zero, contact using elastic modulus (with Poisson's Ratio) is disabled. For reference, approximate values for Material:(Young's Modulus, Poisson's Ratio) for some of the typical materials are: Plastic: (1e8 ~ 3e9 Pa, 0.35 ~ 0.41), Wood: (4e9 ~ 1e10 Pa, 0.22 ~ 0.50), Aluminum: (7e10 Pa, 0.32 ~ 0.35), Steel: (2e11 Pa, 0.26 ~ 0.31).",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "ode",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "ODE contact parameters",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "soft_cfm",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Soft constraint force mixing.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "soft_erp",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0.20000000000000001 \n ",
+                    "description": "Soft error reduction parameter",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "kp",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1000000000000 \n ",
+                    "description": "dynamically \"stiffness\"-equivalent coefficient for contact joints",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "kd",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "dynamically \"damping\"-equivalent coefficient for contact joints",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "max_vel",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0.01 \n ",
+                    "description": "maximum contact correction velocity truncation term.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "min_depth",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "minimum allowable depth before contact correction impulse is applied",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "bullet",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "Bullet contact parameters",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "soft_cfm",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Soft constraint force mixing.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "soft_erp",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0.20000000000000001 \n ",
+                    "description": "Soft error reduction parameter",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "kp",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1000000000000 \n ",
+                    "description": "dynamically \"stiffness\"-equivalent coefficient for contact joints",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "kd",
+                    "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                    "description": "dynamically \"damping\"-equivalent coefficient for contact joints",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "split_impulse",
+                    "details_raw": "\n Required:  1 Type:  bool Default:  true \n ",
+                    "description": "Similar to ODE's max_vel implementation. See http://bulletphysics.org/mediawiki-1.5.8/index.php/BtContactSolverInfo#Split_Impulse for more information.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "split_impulse_penetration_threshold",
+                    "details_raw": "\n Required:  1 Type:  double Default:  -0.01 \n ",
+                    "description": "Similar to ODE's max_vel implementation. See http://bulletphysics.org/mediawiki-1.5.8/index.php/BtContactSolverInfo#Split_Impulse for more information.",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "soft_contact",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "dart",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "soft contact pamameters based on paper: http://www.cc.gatech.edu/graphics/projects/Sumit/homepage/papers/sigasia11/jain_softcontacts_siga11.pdf",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "bone_attachment",
+                    "details_raw": "\n Required:  1 Type:  double Default:  100 \n ",
+                    "description": "This is variable k_v in the soft contacts paper. Its unit is N/m.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "stiffness",
+                    "details_raw": "\n Required:  1 Type:  double Default:  100 \n ",
+                    "description": "This is variable k_e in the soft contacts paper. Its unit is N/m.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "damping",
+                    "details_raw": "\n Required:  1 Type:  double Default:  10 \n ",
+                    "description": "Viscous damping of point velocity in body frame. Its unit is N/m/s.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "flesh_mass_fraction",
+                    "details_raw": "\n Required:  1 Type:  double Default:  0.050000000000000003 \n ",
+                    "description": "Fraction of mass to be distributed among deformable nodes.",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

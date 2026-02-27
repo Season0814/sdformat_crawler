@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>SDFormat Model Hierarchy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+body{margin:0;font-family:Segoe UI,Arial,sans-serif;color:#1f2d3d;background:#fff}
+.bar{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid #e6e8eb;background:#f8fafc;position:sticky;top:0;z-index:10}
+.bar h1{font-size:16px;margin:0 8px 0 0;color:#0f172a;font-weight:600}
+.bar input{flex:1;max-width:520px;padding:8px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:14px}
+.bar button{padding:8px 10px;border:1px solid #c7ced6;background:#f0f6ff;color:#1f2d3d;border-radius:6px;cursor:pointer}
+.wrap{display:grid;grid-template-columns: 420px 1fr;gap:0;height:calc(100vh - 52px)}
+.tree{overflow:auto;border-right:1px solid #e6e8eb}
+.details{overflow:auto}
+.panel-title{padding:10px 12px;border-bottom:1px solid #e6e8eb;background:#f8fafc;color:#0f172a;font-weight:600}
+.panel-body{padding:12px}
+ul.treeul{list-style:none;padding-left:0;margin:0}
+li.node{padding-left:12px;position:relative}
+li.node .row{display:flex;align-items:center;gap:6px;padding:6px 8px}
+li.node .label{font-size:14px;cursor:pointer;user-select:none}
+li.node .meta{font-size:12px;color:#5a6b7b}
+li.node .toggle{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #c7ced6;border-radius:3px;background:#fff;color:#334155;font-size:12px;cursor:pointer}
+li.node .toggle.hidden{visibility:hidden}
+li.node .label.match{background: #fff0b3}
+.attrs{margin-top:8px;font-size:13px;color:#334155}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 12px;margin-top:8px}
+.kv div{padding:2px 0}
+.muted{color:#64748b}
+</style>
+</head>
+<body>
+<div class="bar">
+  <h1>SDFormat Model 层级</h1>
+  <input id="q" placeholder="搜索名称或描述"/>
+  <button id="exp">全部展开</button>
+  <button id="col">全部折叠</button>
+</div>
+<div class="wrap">
+  <div class="tree">
+    <div class="panel-title">树形结构</div>
+    <div class="panel-body">
+      <ul id="root" class="treeul"></ul>
+    </div>
+  </div>
+  <div class="details">
+    <div class="panel-title">详情</div>
+    <div class="panel-body" id="detail">
+      <div class="muted">选择左侧任意节点查看详情</div>
+    </div>
+  </div>
+</div>
+<script>
+function parseDetails(raw){
+  const info={};if(!raw)return info;
+  const m1=/Required:\s*([^\s]+)/i.exec(raw);if(m1)info.required=m1[1];
+  const m2=/Type:\s*([^D\n]+)/i.exec(raw);if(m2)info.type=m2[1].trim();
+  const m3=/Default:\s*(.*)/i.exec(raw);if(m3)info.default=m3[1].trim();
+  return info;
+}
+function el(tag,cls,txt){
+  const e=document.createElement(tag);
+  if(cls)e.className=cls;
+  if(txt!=null)e.textContent=txt;
+  return e;
+}
+function buildNode(item,depth){
+  const li=el('li','node');
+  const row=el('div','row');
+  const hasChildren=item.children&&item.children.length>0;
+  const t=el('div','toggle'+(hasChildren?'':' hidden'), hasChildren?'▸':'');
+  const label=el('span','label', item.name+(item.node_type?(' ('+item.node_type+')'):''));
+  row.appendChild(t);row.appendChild(label);
+  li.appendChild(row);
+  if(hasChildren){
+    const ul=el('ul','treeul');ul.style.display='none';
+    item.children.forEach(ch=>ul.appendChild(buildNode(ch,depth+1)));
+    li.appendChild(ul);
+    t.addEventListener('click',()=>{
+      const open=ul.style.display!=='none';
+      ul.style.display=open?'none':'block';
+      t.textContent=open?'▸':'▾';
+    });
+    label.addEventListener('dblclick',()=>t.click());
+  }
+  li._data=item;
+  li._label=label;
+  li._toggle=t;
+  label.addEventListener('click',()=>showDetails(item));
+  return li;
+}
+function showDetails(item){
+  const d=document.getElementById('detail');
+  const inf=parseDetails(item.details_raw||'');
+  d.innerHTML='';
+  const h=el('div',null,item.name+(item.node_type?(' ('+item.node_type+')'):''));
+  h.style.fontWeight='600';d.appendChild(h);
+  const kv=el('div','kv');
+  const push=(k,v)=>{kv.appendChild(el('div','muted',k));kv.appendChild(el('div',null,v||''));};
+  push('Required',inf.required||'');
+  push('Type',inf.type||'');
+  push('Default',inf.default||'');
+  push('描述',item.description||'');
+  d.appendChild(kv);
+}
+function expandAll(root){
+  root.querySelectorAll('li.node').forEach(li=>{
+    const ul=li.querySelector(':scope > ul.treeul');
+    const t=li._toggle;
+    if(ul&&t){ul.style.display='block';t.textContent='▾';}
+  });
+}
+function collapseAll(root){
+  root.querySelectorAll('li.node').forEach(li=>{
+    const ul=li.querySelector(':scope > ul.treeul');
+    const t=li._toggle;
+    if(ul&&t){ul.style.display='none';t.textContent='▸';}
+  });
+}
+function ensureVisible(li){
+  let p=li.parentElement;
+  while(p&&p!==document.body){
+    if(p.tagName==='UL'&&p.classList.contains('treeul')){
+      p.style.display='block';
+      const pli=p.parentElement;
+      if(pli&&pli._toggle)pli._toggle.textContent='▾';
+    }
+    p=p.parentElement;
+  }
+}
+function filterTree(root, q){
+  const query=q.trim().toLowerCase();
+  root.querySelectorAll('span.label').forEach(s=>s.classList.remove('match'));
+  if(!query){
+    root.querySelectorAll('li.node').forEach(li=>li.style.display='');
+    collapseAll(root);
+    return;
+  }
+  const matched=new Set();
+  root.querySelectorAll('li.node').forEach(li=>{
+    const t=(li._data.name||'')+' '+(li._data.description||'');
+    const ok=t.toLowerCase().includes(query);
+    if(ok){matched.add(li);li._label.classList.add('match');}
+  });
+  root.querySelectorAll('li.node').forEach(li=>li.style.display='none');
+  matched.forEach(li=>{
+    li.style.display='';
+    ensureVisible(li);
+    let p=li.parentElement;
+    while(p&&p!==document.body){
+      if(p.tagName==='UL'&&p.classList.contains('treeul')){
+        const pli=p.parentElement;
+        if(pli&&pli.classList.contains('node'))pli.style.display='';
+      }
+      p=p.parentElement;
+    }
+  });
+}
+async function init(){
+  const res=await fetch('structure.json');
+  const data=await res.json();
+  const root=document.getElementById('root');
+  root.innerHTML='';
+  data.forEach(it=>root.appendChild(buildNode(it,0)));
+  document.getElementById('exp').addEventListener('click',()=>expandAll(root));
+  document.getElementById('col').addEventListener('click',()=>collapseAll(root));
+  document.getElementById('q').addEventListener('input',e=>filterTree(root,e.target.value));
+}
+init();
+</script>
+</body>
+</html>
+

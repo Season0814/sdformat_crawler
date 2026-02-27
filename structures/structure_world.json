@@ -1,0 +1,1129 @@
+[
+  {
+    "node_type": "Element",
+    "name": "world",
+    "details_raw": "\n Required:  * Type:  Default:  \n ",
+    "description": "The world element encapsulates an entire world description including: models, scene, physics, and plugins.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "name",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "Unique name of the world",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "audio",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Global audio properties.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "device",
+            "details_raw": "\n Required:  1 Type:  string Default:  default \n ",
+            "description": "Device to use for audio playback. A value of \"default\" will use the system's default audio device. Otherwise, specify a an audio device file\"",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "wind",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "The wind tag specifies the type and properties of the wind.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "linear_velocity",
+            "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+            "description": "Linear velocity of the wind.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "include",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "Include resources from a URI. Included resources can only contain one 'model', 'light' or 'actor' element. The URI can point to a directory or a file. If the URI is a directory, it must conform to the model database structure (see /tutorials?tut=composition&cat=specification&#defining-models-in-separate-files).",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "merge",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Merge the included model into the top model. Only elements valid in 'world' are allowed in the included model",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "uri",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "URI to a resource, such as a model",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "Override the name of the included entity.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "static",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Override the static value of the included entity.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "placement_frame",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "The frame inside the included entity whose pose will be set by the specified pose element. If this element is specified, the pose must be specified.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "model_state",
+            "details_raw": "\n Required:  * Type:  Default:  \n ",
+            "description": "The model state element encapsulates variables within a model that may change over time, including object poses, the states of its nested models and links and joints, and changes in model scale.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "name",
+                "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                "description": "Name of the model",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "model_state",
+                "details_raw": "\n Required:  * Type:  Default:  \n ",
+                "description": "A nested model state element",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "name",
+                    "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                    "description": "Name of the model.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "",
+                    "details_raw": "\n Required:  * Type:  Default:  \n ",
+                    "description": "",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "scale",
+                "details_raw": "\n Required:  0 Type:  vector3 Default:  1 1 1 \n ",
+                "description": "Scale for the 3 dimensions of the model.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "joint_state",
+                "details_raw": "\n Required:  * Type:  Default:  \n ",
+                "description": "The joint state element encapsulates variables within a joint that may change over time, currently limited to the joint angle.",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "name",
+                    "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                    "description": "Name of the joint",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "angle",
+                    "details_raw": "\n Required:  -1 Type:  double Default:  0 \n ",
+                    "description": "Angle of an axis",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "axis",
+                        "details_raw": "\n Required:  1 Type:  unsigned int Default:  0 \n ",
+                        "description": "Index of the axis.",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "axis_state",
+                    "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                    "description": "Contains the state of the first joint axis.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "position",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The position of the first joint axis.",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "degrees",
+                            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                            "description": "If this is a rotational axis and this attribute is true, the joint position is expressed in units of degrees [deg], otherwise it is expressed in radians [rad]. If this axis is translational (such as a prismatic joint), the units will be interpreted in meters [m] regardless of the value of this attribute.",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "velocity",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The velocity of the first joint axis.",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "degrees",
+                            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                            "description": "If this is a rotational axis and this attribute is true, the joint velocity is expressed in units of degrees per second [deg/s], otherwise it is expressed in radians per second [rad/s]. If this axis is translational (such as a prismatic joint), the units will be interpreted in meters per second [m/s] regardless of the value of this attribute.",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "acceleration",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The acceleration of the first joint axis.",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "degrees",
+                            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                            "description": "If this is a rotational axis and this attribute is true, the joint acceleration is expressed in units of degrees per second per second [deg/s^2], otherwise it is expressed in radians per second per second [rad/s^2]. If this axis is translational (such as a prismatic joint), the units will be interpreted in meters per second per second [m/s^2] regardless of the value of this attribute.",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "effort",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The effort applied at the first joint axis.",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "axis2_state",
+                    "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                    "description": "Contains the state of the second joint axis.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "position",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The position of the second joint axis.",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "degrees",
+                            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                            "description": "If this is a rotational axis and this attribute is true, the joint position is expressed in units of degrees [deg], otherwise it is expressed in radians [rad]. If this axis is translational (such as a prismatic joint), the units will be interpreted in meters [m] regardless of the value of this attribute.",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "velocity",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The velocity of the second joint axis.",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "degrees",
+                            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                            "description": "If this is a rotational axis and this attribute is true, the joint velocity is expressed in units of degrees per second [deg/s], otherwise it is expressed in radians per second [rad/s]. If this axis is translational (such as a prismatic joint), the units will be interpreted in meters per second [m/s] regardless of the value of this attribute.",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "acceleration",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The acceleration of the second joint axis.",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "degrees",
+                            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                            "description": "If this is a rotational axis and this attribute is true, the joint acceleration is expressed in units of degrees per second per second [deg/s^2], otherwise it is expressed in radians per second per second [rad/s^2]. If this axis is translational (such as a prismatic joint), the units will be interpreted in meters per second per second [m/s^2] regardless of the value of this attribute.",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "effort",
+                        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                        "description": "The effort applied at the second joint axis.",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "frame",
+                "details_raw": "\n Required:  * Type:  Default:  \n ",
+                "description": "A frame of reference in which poses may be expressed.",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "name",
+                    "details_raw": "\n Required:  1 Type:  string Default:  \n ",
+                    "description": "Name of the frame. It must be unique within its scope (model/world), i.e., it must not match the name of another frame, link, joint, or model within the same scope.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "attached_to",
+                    "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                    "description": "If specified, this frame is attached to the specified frame. The specified frame must be within the same scope and may be defined implicitly, i.e., the name of any //frame, //model, //joint, or //link within the same scope may be used. If missing, this frame is attached to the containing scope's frame. Within a //world scope this is the implicit world frame, and within a //model scope this is the implicit model frame. A frame moves jointly with the frame it is @attached_to. This is different from //pose/@relative_to. @attached_to defines how the frame is attached to a //link, //model, or //world frame, while //pose/@relative_to defines how the frame's pose is represented numerically. As a result, following the chain of @attached_to attributes must always lead to a //link, //model, //world, or //joint (implicitly attached_to its child //link).",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "pose",
+                    "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+                    "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "relative_to",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "rotation_format",
+                        "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                        "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "degrees",
+                        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                        "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "pose",
+                "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+                "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "relative_to",
+                    "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                    "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "rotation_format",
+                    "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                    "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "degrees",
+                    "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                    "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "link_state",
+                "details_raw": "\n Required:  * Type:  Default:  \n ",
+                "description": "The link state element encapsulates variables within a link that may change over time, including pose, velocity, acceleration, applied wrench, and the state of attached collisions.",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "name",
+                    "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                    "description": "Name of the link",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "angular_velocity",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Angular velocity of the link frame relative to the world frame.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "degrees",
+                        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                        "description": "If true, the angular velocity is expressed in units of degrees per second [deg/s], otherwise it is expressed in radians per second [rad/s].",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "linear_velocity",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Linear velocity of the link frame relative to the world frame.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "velocity",
+                    "details_raw": "\n Required:  -1 Type:  pose Default:  0 0 0 0 0 0 \n ",
+                    "description": "Velocity of the link. The x, y, z components of the pose correspond to the linear velocity of the link, and the roll, pitch, yaw components correspond to the angular velocity of the link",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "angular_acceleration",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Angular acceleration of the link frame relative to the world frame.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "degrees",
+                        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                        "description": "If true, the angular acceleration is expressed in units of degrees per second per second [deg/s^2], otherwise it is expressed in radians per second per second [rad/s^2].",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "linear_acceleration",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Linear acceleration of the link frame relative to the world frame.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "acceleration",
+                    "details_raw": "\n Required:  -1 Type:  pose Default:  0 0 0 0 0 0 \n ",
+                    "description": "Acceleration of the link. The x, y, z components of the pose correspond to the linear acceleration of the link, and the roll, pitch, yaw components correspond to the angular acceleration of the link",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "torque",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Torque acting on the link relative to the world frame.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "force",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+                    "description": "Force acting on the link at the link frame relative to the world frame.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "wrench",
+                    "details_raw": "\n Required:  -1 Type:  pose Default:  0 0 0 0 0 0 \n ",
+                    "description": "Force and torque applied to the link. The x, y, z components of the pose correspond to the force applied to the link, and the roll, pitch, yaw components correspond to the torque applied to the link",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "collision_state",
+                    "details_raw": "\n Required:  * Type:  Default:  \n ",
+                    "description": "Collision state",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "name",
+                        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                        "description": "Name of the collision",
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "pose",
+                    "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+                    "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "relative_to",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "rotation_format",
+                        "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                        "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "degrees",
+                        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                        "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "pose",
+            "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+            "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "relative_to",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rotation_format",
+                "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "degrees",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "plugin",
+            "details_raw": "\n Required:  * Type:  Default:  \n ",
+            "description": "A plugin is a dynamically loaded chunk of code. It can exist as a child of world, model, and sensor.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "name",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "A name for the plugin.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "filename",
+                "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                "description": "Name of the shared library to load. If the filename is not a full path name, the file will be searched for in the configuration paths.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "Elements",
+                "details_raw": "",
+                "description": "Arbitrary elements and attributes that can be used to configure the plugin",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "gravity",
+        "details_raw": "\n Required:  1 Type:  vector3 Default:  0 0 -9.8000000000000007 \n ",
+        "description": "The gravity vector in m/s^2, expressed in a coordinate frame defined by the spherical_coordinates tag.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "magnetic_field",
+        "details_raw": "\n Required:  1 Type:  vector3 Default:  5.5644999999999998e-06 2.2875799999999999e-05 -4.2388400000000002e-05 \n ",
+        "description": "The magnetic vector in Tesla, expressed in a coordinate frame defined by the spherical_coordinates tag.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "atmosphere",
+        "details_raw": "\n Required:  1 Type:  Default:  \n ",
+        "description": "The atmosphere tag specifies the type and properties of the atmosphere model.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "type",
+            "details_raw": "\n Required:  1 Type:  string Default:  adiabatic \n ",
+            "description": "The type of the atmosphere engine. Current options are adiabatic. Defaults to adiabatic if left unspecified.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "temperature",
+            "details_raw": "\n Required:  0 Type:  double Default:  288.14999999999998 \n ",
+            "description": "Temperature at sea level in kelvins.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pressure",
+            "details_raw": "\n Required:  0 Type:  double Default:  101325 \n ",
+            "description": "Pressure at sea level in pascals.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "temperature_gradient",
+            "details_raw": "\n Required:  0 Type:  double Default:  -0.0064999999999999997 \n ",
+            "description": "Temperature gradient with respect to increasing altitude at sea level in units of K/m.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "gui",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "fullscreen",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "camera",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "name",
+                "details_raw": "\n Required:  1 Type:  string Default:  user_camera \n ",
+                "description": "",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "view_controller",
+                "details_raw": "\n Required:  0 Type:  string Default:  orbit \n ",
+                "description": "",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "projection_type",
+                "details_raw": "\n Required:  0 Type:  string Default:  perspective \n ",
+                "description": "Set the type of projection for the camera. Valid values are \"perspective\" and \"orthographic\".",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "track_visual",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "name",
+                    "details_raw": "\n Required:  0 Type:  string Default:  __default__ \n ",
+                    "description": "Name of the tracked visual. If no name is provided, the remaining settings will be applied whenever tracking is triggered in the GUI.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "min_dist",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Minimum distance between the camera and the tracked visual. This parameter is only used if static is set to false.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "max_dist",
+                    "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                    "description": "Maximum distance between the camera and the tracked visual. This parameter is only used if static is set to false.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "static",
+                    "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                    "description": "If set to true, the position of the camera is fixed relatively to the model or to the world, depending on the value of the use_model_frame element. Otherwise, the position of the camera may vary but the distance between the camera and the model will depend on the value of the min_dist and max_dist elements. In any case, the camera will always follow the model by changing its orientation.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "use_model_frame",
+                    "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+                    "description": "If set to true, the position of the camera is relative to the model reference frame, which means that its position relative to the model will not change. Otherwise, the position of the camera is relative to the world reference frame, which means that its position relative to the world will not change. This parameter is only used if static is set to true.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "xyz",
+                    "details_raw": "\n Required:  0 Type:  vector3 Default:  -5 0 3 \n ",
+                    "description": "The position of the camera's reference frame. This parameter is only used if static is set to true. If use_model_frame is set to true, the position is relative to the model reference frame, otherwise it represents world coordinates.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "inherit_yaw",
+                    "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                    "description": "If set to true, the camera will inherit the yaw rotation of the tracked model. This parameter is only used if static and use_model_frame are set to true.",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "pose",
+                "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+                "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "relative_to",
+                    "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                    "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "rotation_format",
+                    "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                    "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "degrees",
+                    "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                    "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "plugin",
+            "details_raw": "\n Required:  * Type:  Default:  \n ",
+            "description": "A plugin is a dynamically loaded chunk of code. It can exist as a child of world, model, and sensor.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "name",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "A name for the plugin.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "filename",
+                "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                "description": "Name of the shared library to load. If the filename is not a full path name, the file will be searched for in the configuration paths.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "Elements",
+                "details_raw": "",
+                "description": "Arbitrary elements and attributes that can be used to configure the plugin",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "physics",
+        "details_raw": "\n Required:  1 Type:  Default:  \n ",
+        "description": "The physics tag specifies the type and properties of the dynamics engine.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "scene",
+        "details_raw": "\n Required:  1 Type:  Default:  \n ",
+        "description": "Specifies the look of the environment.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "light",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The light element describes a light source.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "frame",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "A frame of reference in which poses may be expressed.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  1 Type:  string Default:  \n ",
+            "description": "Name of the frame. It must be unique within its scope (model/world), i.e., it must not match the name of another frame, link, joint, or model within the same scope.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "attached_to",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "If specified, this frame is attached to the specified frame. The specified frame must be within the same scope and may be defined implicitly, i.e., the name of any //frame, //model, //joint, or //link within the same scope may be used. If missing, this frame is attached to the containing scope's frame. Within a //world scope this is the implicit world frame, and within a //model scope this is the implicit model frame. A frame moves jointly with the frame it is @attached_to. This is different from //pose/@relative_to. @attached_to defines how the frame is attached to a //link, //model, or //world frame, while //pose/@relative_to defines how the frame's pose is represented numerically. As a result, following the chain of @attached_to attributes must always lead to a //link, //model, //world, or //joint (implicitly attached_to its child //link).",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pose",
+            "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+            "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "relative_to",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rotation_format",
+                "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "degrees",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "joint",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "A joint connects two links with kinematic and dynamic properties. By default, the pose of a joint is expressed in the child link frame.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "model",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The model element defines a complete robot or any other physical object.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "actor",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "A special kind of model which can have a scripted motion. This includes both global waypoint type animations and skeleton animations.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "plugin",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "A plugin is a dynamically loaded chunk of code. It can exist as a child of world, model, and sensor.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "A name for the plugin.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "filename",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "Name of the shared library to load. If the filename is not a full path name, the file will be searched for in the configuration paths.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "Elements",
+            "details_raw": "",
+            "description": "Arbitrary elements and attributes that can be used to configure the plugin",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "road",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "Name of the road",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "width",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Width of the road",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "point",
+            "details_raw": "\n Required:  + Type:  vector3 Default:  0 0 0 \n ",
+            "description": "A series of points that define the path of the road.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "material",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "The material of the visual element.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "spherical_coordinates",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "surface_model",
+            "details_raw": "\n Required:  1 Type:  string Default:  EARTH_WGS84 \n ",
+            "description": "Name of planetary surface model, used to determine the surface altitude at a given latitude and longitude. The default is an ellipsoid model of the earth based on the WGS-84 standard. It is used in Gazebo's GPS sensor implementation.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "world_frame_orientation",
+            "details_raw": "\n Required:  0 Type:  string Default:  ENU \n ",
+            "description": "This field identifies how Gazebo world frame is aligned in Geographical sense. The final Gazebo world frame orientation is obtained by rotating a frame aligned with following notation by the field heading_deg. Options are: - ENU (East-North-Up)",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "latitude_deg",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "Geodetic latitude at origin of gazebo reference frame, specified in units of degrees.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "longitude_deg",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "Longitude at origin of gazebo reference frame, specified in units of degrees.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "elevation",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "Elevation of origin of gazebo reference frame, specified in meters.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "surface_axis_equatorial",
+            "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+            "description": "Equatorial axis of a custom surface type, specified in meters. This is only required for custom surfaces.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "surface_axis_polar",
+            "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+            "description": "Polar axis of a custom surface type, specified in meters. This is only required for custom surfaces.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "heading_deg",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "Heading offset of gazebo reference frame, measured as angle between Gazebo world frame and the world_frame_orientation type. The direction of rotation follows the right-hand rule, so a positive angle indicates clockwise rotation (from east to north) when viewed from top-down. Note that this is not consistent with compass heading convention. The angle is specified in degrees.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "state",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The state element encapsulates variables within a world that may change over time, including object poses, dynamic states such as velocity and acceleration, a description of objects added to the world, and a list of objects deleted from the world.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "population",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The population element defines how and where a set of models will be automatically populated in Gazebo.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "A unique name for the population. This name must not match another population in the world.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "model_count",
+            "details_raw": "\n Required:  1 Type:  int Default:  1 \n ",
+            "description": "The number of models to place.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "distribution",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "Specifies the type of object distribution and its optional parameters.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "type",
+                "details_raw": "\n Required:  1 Type:  string Default:  random \n ",
+                "description": "Define how the objects will be placed in the specified region. - random: Models placed at random. - uniform: Models approximately placed in a 2D grid pattern with control over the number of objects. - grid: Models evenly placed in a 2D grid pattern. The number of objects is not explicitly specified, it is based on the number of rows and columns of the grid. - linear-x: Models evently placed in a row along the global x-axis. - linear-y: Models evently placed in a row along the global y-axis. - linear-z: Models evently placed in a row along the global z-axis.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rows",
+                "details_raw": "\n Required:  0 Type:  int Default:  1 \n ",
+                "description": "Number of rows in the grid.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "cols",
+                "details_raw": "\n Required:  0 Type:  int Default:  1 \n ",
+                "description": "Number of columns in the grid.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "step",
+                "details_raw": "\n Required:  0 Type:  vector3 Default:  0.5 0.5 0 \n ",
+                "description": "Distance between elements of the grid.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "box",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Box shape",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "size",
+                "details_raw": "\n Required:  1 Type:  vector3 Default:  1 1 1 \n ",
+                "description": "The three side lengths of the box. The origin of the box is in its geometric center (inside the center of the box).",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "cylinder",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Cylinder shape",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "radius",
+                "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+                "description": "Radius of the cylinder",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "length",
+                "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+                "description": "Length of the cylinder along the z axis",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "pose",
+            "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+            "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "relative_to",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rotation_format",
+                "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "degrees",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "model",
+            "details_raw": "\n Required:  * Type:  Default:  \n ",
+            "description": "The model element defines a complete robot or any other physical object.",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

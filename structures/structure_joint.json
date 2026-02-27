@@ -1,0 +1,544 @@
+[
+  {
+    "node_type": "Element",
+    "name": "joint",
+    "details_raw": "\n Required:  * Type:  Default:  \n ",
+    "description": "A joint connects two links with kinematic and dynamic properties. By default, the pose of a joint is expressed in the child link frame.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "name",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "A unique name for the joint within its scope.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "type",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "The type of joint, which must be one of the following: (continuous) a hinge joint that rotates on a single axis with a continuous range of motion, (revolute) a hinge joint that rotates on a single axis with a fixed range of motion, (gearbox) geared revolute joints, (revolute2) same as two revolute joints connected in series, (prismatic) a sliding joint that slides along an axis with a limited range specified by upper and lower limits, (ball) a ball and socket joint, (screw) a single degree of freedom joint with coupled sliding and rotational motion, (universal) like a ball joint, but constrains one degree of freedom, (fixed) a joint with zero degrees of freedom that rigidly connects two links.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "parent",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "Name of the parent frame or \"world\".",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "child",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "Name of the child frame. The value \"world\" may not be specified.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "gearbox_ratio",
+        "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+        "description": "Parameter for gearbox joints. Given theta_1 and theta_2 defined in description for gearbox_reference_body, theta_2 = -gearbox_ratio * theta_1.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "gearbox_reference_body",
+        "details_raw": "\n Required:  0 Type:  string Default:  __default__ \n ",
+        "description": "Parameter for gearbox joints. Gearbox ratio is enforced over two joint angles. First joint angle (theta_1) is the angle from the gearbox_reference_body to the parent link in the direction of the axis element and the second joint angle (theta_2) is the angle from the gearbox_reference_body to the child link in the direction of the axis2 element.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "thread_pitch",
+        "details_raw": "\n Required:  -1 Type:  double Default:  1 \n ",
+        "description": "Parameter for screw joints representing the ratio between rotation and translation of the joint. This parameter has been interpreted by gazebo-classic as having units of radians / meter with a positive value corresponding to a left-handed thread. The parameter is now deprecated in favor of `screw_thread_pitch`.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "screw_thread_pitch",
+        "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+        "description": "A parameter for screw joint kinematics, representing the axial distance traveled for each revolution of the joint, with units of meters / revolution with a positive value corresponding to a right-handed thread. This parameter supersedes `thread_pitch`.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "axis",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Parameters related to the axis of rotation for revolute joints, the axis of translation for prismatic joints.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "xyz",
+            "details_raw": "\n Required:  1 Type:  vector3 Default:  0 0 1 \n ",
+            "description": "Represents the x,y,z components of the axis unit vector. The axis is expressed in the joint frame unless a different frame is expressed in the expressed_in attribute. The vector should be normalized.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "expressed_in",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Name of frame in whose coordinates the xyz unit vector is expressed.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "dynamics",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "An element specifying physical properties of the joint. These values are used to specify modeling properties of the joint, particularly useful for simulation.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "damping",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "The physical velocity dependent viscous damping coefficient of the joint.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "friction",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "The physical static friction value of the joint.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "spring_reference",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "The spring reference position for this joint axis.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "spring_stiffness",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "The spring stiffness for this joint axis.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "limit",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "specifies the limits of this joint",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "lower",
+                "details_raw": "\n Required:  1 Type:  double Default:  -inf \n ",
+                "description": "Specifies the lower joint limit (radians for revolute joints, meters for prismatic joints). Omit if joint is continuous.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "upper",
+                "details_raw": "\n Required:  1 Type:  double Default:  inf \n ",
+                "description": "Specifies the upper joint limit (radians for revolute joints, meters for prismatic joints). Omit if joint is continuous.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "effort",
+                "details_raw": "\n Required:  0 Type:  double Default:  inf \n ",
+                "description": "A value for enforcing the maximum joint effort applied. Limit is not enforced if value is negative.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "velocity",
+                "details_raw": "\n Required:  0 Type:  double Default:  inf \n ",
+                "description": "A value for enforcing the maximum joint velocity.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "stiffness",
+                "details_raw": "\n Required:  0 Type:  double Default:  100000000 \n ",
+                "description": "Joint stop stiffness.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "dissipation",
+                "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                "description": "Joint stop dissipation.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "mimic",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Specifies a linear equality constraint between the position of two joint axes. One joint axis is labeled as the leader and the other as the follower. The joint axis containing a mimic tag is the follower, and the leader is specified by the joint and axis attributes. The multiplier, offset, and reference parameters determine the linear relationship according to the following equation: follower_position = multiplier * (leader_position - reference) + offset. Note that the multiplier and offset parameters match the parameters of the URDF mimic tag if the reference parameter is 0.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "joint",
+                "details_raw": "\n Required:  1 Type:  string Default:  \n ",
+                "description": "Name of the joint containing the leader axis, i.e. the axis to be mimicked",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "axis",
+                "details_raw": "\n Required:  0 Type:  string Default:  axis \n ",
+                "description": "Name of the leader axis, i.e. the axis to be mimicked. The only valid values are \"axis\" and \"axis2\", and \"axis2\" may only be used if the leader joint has multiple axes.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "multiplier",
+                "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+                "description": "A parameter representing the ratio between changes in the follower joint axis position relative to changes in the leader joint axis position. It can be expressed as follows: multiplier = (follower_position - offset) / (leader_position - reference)",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "offset",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Offset to the follower position in the linear constraint.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "reference",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Reference for the leader position before applying the multiplier in the linear constraint.",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "axis2",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Parameters related to the second axis of rotation for revolute2 joints and universal joints.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "xyz",
+            "details_raw": "\n Required:  1 Type:  vector3 Default:  0 0 1 \n ",
+            "description": "Represents the x,y,z components of the axis unit vector. The axis is expressed in the joint frame unless a different frame is expressed in the expressed_in attribute. The vector should be normalized.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "expressed_in",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Name of frame in whose coordinates the xyz unit vector is expressed.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "dynamics",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "An element specifying physical properties of the joint. These values are used to specify modeling properties of the joint, particularly useful for simulation.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "damping",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "The physical velocity dependent viscous damping coefficient of the joint. EXPERIMENTAL: if damping coefficient is negative and implicit_spring_damper is true, adaptive damping is used.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "friction",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "The physical static friction value of the joint.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "spring_reference",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "The spring reference position for this joint axis.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "spring_stiffness",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "The spring stiffness for this joint axis.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "limit",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "lower",
+                "details_raw": "\n Required:  0 Type:  double Default:  -inf \n ",
+                "description": "An attribute specifying the lower joint limit (radians for revolute joints, meters for prismatic joints). Omit if joint is continuous.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "upper",
+                "details_raw": "\n Required:  0 Type:  double Default:  inf \n ",
+                "description": "An attribute specifying the upper joint limit (radians for revolute joints, meters for prismatic joints). Omit if joint is continuous.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "effort",
+                "details_raw": "\n Required:  0 Type:  double Default:  inf \n ",
+                "description": "An attribute for enforcing the maximum joint effort applied by Joint::SetForce. Limit is not enforced if value is negative.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "velocity",
+                "details_raw": "\n Required:  0 Type:  double Default:  inf \n ",
+                "description": "(not implemented) An attribute for enforcing the maximum joint velocity.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "stiffness",
+                "details_raw": "\n Required:  0 Type:  double Default:  100000000 \n ",
+                "description": "Joint stop stiffness. Supported physics engines: SimBody.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "dissipation",
+                "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+                "description": "Joint stop dissipation. Supported physics engines: SimBody.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "mimic",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Specifies a linear equality constraint between the position of two joint axes. One joint axis is labeled as the leader and the other as the follower. The joint axis containing a mimic tag is the follower, and the leader is specified by the joint and axis attributes. The multiplier, offset, and reference parameters determine the linear relationship according to the following equation: follower_position = multiplier * (leader_position - reference) + offset. Note that the multiplier and offset parameters match the parameters of the URDF mimic tag if the reference parameter is 0.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "joint",
+                "details_raw": "\n Required:  1 Type:  string Default:  \n ",
+                "description": "Name of the joint containing the leader axis, i.e. the axis to be mimicked",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "axis",
+                "details_raw": "\n Required:  0 Type:  string Default:  axis \n ",
+                "description": "Name of the leader axis, i.e. the axis to be mimicked. The only valid values are \"axis\" and \"axis2\", and \"axis2\" may only be used if the leader joint has multiple axes.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "multiplier",
+                "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+                "description": "A parameter representing the ratio between changes in the follower joint axis position relative to changes in the leader joint axis position. It can be expressed as follows: multiplier = (follower_position - offset) / (leader_position - reference)",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "offset",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Offset to the follower position in the linear constraint.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "reference",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Reference for the leader position before applying the multiplier in the linear constraint.",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "physics",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Parameters that are specific to a certain physics engine.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "simbody",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Simbody specific parameters",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "must_be_loop_joint",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Force cut in the multibody graph at this joint.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "ode",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "ODE specific parameters",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "cfm_damping",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "If cfm damping is set to true, ODE will use CFM to simulate damping, allows for infinite damping, and one additional constraint row (previously used for joint limit) is always active.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "implicit_spring_damper",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "If implicit_spring_damper is set to true, ODE will use CFM, ERP to simulate stiffness and damping, allows for infinite damping, and one additional constraint row (previously used for joint limit) is always active. This replaces cfm_damping parameter in SDFormat 1.4.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "fudge_factor",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Scale the excess for in a joint motor at joint limits. Should be between zero and one.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "cfm",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Constraint force mixing for constrained directions",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "erp",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.20000000000000001 \n ",
+                "description": "Error reduction parameter for constrained directions",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "bounce",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Bounciness of the limits",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "max_force",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Maximum force or torque used to reach the desired velocity.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "velocity",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "The desired velocity of the joint. Should only be set if you want the joint to move on load.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "limit",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "cfm",
+                    "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                    "description": "Constraint force mixing parameter used by the joint stop",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "erp",
+                    "details_raw": "\n Required:  1 Type:  double Default:  0.20000000000000001 \n ",
+                    "description": "Error reduction parameter used by the joint stop",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "suspension",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "cfm",
+                    "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                    "description": "Suspension constraint force mixing parameter",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "erp",
+                    "details_raw": "\n Required:  1 Type:  double Default:  0.20000000000000001 \n ",
+                    "description": "Suspension error reduction parameter",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "provide_feedback",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "If provide feedback is set to true, physics engine will compute the constraint forces at this joint.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "pose",
+        "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+        "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "relative_to",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "rotation_format",
+            "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+            "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "degrees",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "sensor",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "The sensor tag describes the type and properties of a sensor.",
+        "children": []
+      }
+    ]
+  }
+]

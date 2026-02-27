@@ -1,0 +1,382 @@
+[
+  {
+    "node_type": "Element",
+    "name": "geometry",
+    "details_raw": "\n Required:  1 Type:  Default:  \n ",
+    "description": "The shape of the visual or collision object.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "empty",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "You can use the empty tag to make empty geometries.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "box",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Box shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "size",
+            "details_raw": "\n Required:  1 Type:  vector3 Default:  1 1 1 \n ",
+            "description": "The three side lengths of the box. The origin of the box is in its geometric center (inside the center of the box).",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "capsule",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Capsule shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "radius",
+            "details_raw": "\n Required:  1 Type:  double Default:  0.5 \n ",
+            "description": "Radius of the capsule",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "length",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Length of the cylindrical portion of the capsule along the z axis",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "cone",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Cone shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "radius",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Radius of the cone",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "length",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Length of the cone along the z axis",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "cylinder",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Cylinder shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "radius",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Radius of the cylinder",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "length",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Length of the cylinder along the z axis",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "ellipsoid",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Ellipsoid shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "radii",
+            "details_raw": "\n Required:  1 Type:  vector3 Default:  1 1 1 \n ",
+            "description": "The three radii of the ellipsoid. The origin of the ellipsoid is in its geometric center (inside the center of the ellipsoid).",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "heightmap",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "A heightmap based on a 2d grayscale image.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "uri",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "URI to a grayscale image file",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "size",
+            "details_raw": "\n Required:  0 Type:  vector3 Default:  1 1 1 \n ",
+            "description": "The size of the heightmap in world units. When loading an image: \"size\" is used if present, otherwise defaults to 1x1x1. When loading a DEM: \"size\" is used if present, otherwise defaults to true size of DEM.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pos",
+            "details_raw": "\n Required:  0 Type:  vector3 Default:  0 0 0 \n ",
+            "description": "A position offset.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "texture",
+            "details_raw": "\n Required:  * Type:  Default:  \n ",
+            "description": "The heightmap can contain multiple textures. The order of the texture matters. The first texture will appear at the lowest height, and the last texture at the highest height. Use blend to control the height thresholds and fade between textures.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "size",
+                "details_raw": "\n Required:  1 Type:  double Default:  10 \n ",
+                "description": "Size of the applied texture in meters.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "diffuse",
+                "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                "description": "Diffuse texture image filename",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "normal",
+                "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                "description": "Normalmap texture image filename",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "blend",
+            "details_raw": "\n Required:  * Type:  Default:  \n ",
+            "description": "The blend tag controls how two adjacent textures are mixed. The number of blend elements should equal one less than the number of textures.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "min_height",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Min height of a blend layer",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "fade_dist",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Distance over which the blend occurs",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "use_terrain_paging",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Set if the rendering engine will use terrain paging",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "sampling",
+            "details_raw": "\n Required:  0 Type:  unsigned int Default:  1 \n ",
+            "description": "Samples per heightmap datum. For rasterized heightmaps, this indicates the number of samples to take per pixel. Using a higher value, e.g. 2, will generally improve the quality of the heightmap but lower performance.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "image",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Extrude a set of boxes from a grayscale image.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "uri",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "URI of the grayscale image file",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "scale",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Scaling factor applied to the image",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "threshold",
+            "details_raw": "\n Required:  1 Type:  int Default:  200 \n ",
+            "description": "Grayscale threshold",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "height",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Height of the extruded boxes",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "granularity",
+            "details_raw": "\n Required:  1 Type:  int Default:  1 \n ",
+            "description": "The amount of error in the model",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "mesh",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Mesh shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "optimization",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "Set whether to optimize the mesh using one of the specified methods. Values include: \"convex_hull\" - a single convex hull that encapsulates the mesh, \"convex_decomposition\" - decompose the mesh into multiple convex hull meshes. Default value is an empty string which means no mesh optimization.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "convex_decomposition",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Convex decomposition parameters. Applicable if the mesh optimization attribute is set to convex_decomposition",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "max_convex_hulls",
+                "details_raw": "\n Required:  0 Type:  unsigned int Default:  16 \n ",
+                "description": "Maximum number of convex hulls to decompose into. This sets the maximum number of submeshes that the final decomposed mesh will contain.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "voxel_resolution",
+                "details_raw": "\n Required:  0 Type:  unsigned int Default:  200000 \n ",
+                "description": "The number of voxels to use for representing the source mesh before decomposition. Applicable only to voxel based convex decomposition methods.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "uri",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "Mesh uri",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "submesh",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Use a named submesh. The submesh must exist in the mesh specified by the uri",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "name",
+                "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                "description": "Name of the submesh within the parent mesh",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "center",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Set to true to center the vertices of the submesh at 0,0,0. This will effectively remove any transformations on the submesh before the poses from parent links and models are applied.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "scale",
+            "details_raw": "\n Required:  0 Type:  vector3 Default:  1 1 1 \n ",
+            "description": "Scaling factor applied to the mesh",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "plane",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Plane shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "normal",
+            "details_raw": "\n Required:  1 Type:  vector3 Default:  0 0 1 \n ",
+            "description": "Normal direction for the plane. When a Plane is used as a geometry for a Visual or Collision object, then the normal is specified in the Visual or Collision frame, respectively.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "size",
+            "details_raw": "\n Required:  1 Type:  vector2d Default:  1 1 \n ",
+            "description": "Length of each side of the plane. Note that this property is meaningful only for visualizing the Plane, i.e., when the Plane is used as a geometry for a Visual object. The Plane has infinite size when used as a geometry for a Collision object.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "polyline",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Defines an extruded polyline shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "point",
+            "details_raw": "\n Required:  + Type:  vector2d Default:  0 0 \n ",
+            "description": "A series of points that define the path of the polyline.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "height",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "Height of the polyline",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "sphere",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Sphere shape",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "radius",
+            "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+            "description": "radius of the sphere",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,167 @@
+[
+  {
+    "node_type": "Element",
+    "name": "light",
+    "details_raw": "\n Required:  * Type:  Default:  \n ",
+    "description": "The light element describes a light source.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "name",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "A unique name for the light.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "type",
+        "details_raw": "\n Required:  1 Type:  string Default:  point \n ",
+        "description": "The light type: point, directional, spot.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "cast_shadows",
+        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+        "description": "When true, the light will cast shadows.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "light_on",
+        "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+        "description": "When true, the light is on.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "visualize",
+        "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+        "description": "If true, the light is visualized in the GUI",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "intensity",
+        "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+        "description": "Scale factor to set the relative power of a light.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "diffuse",
+        "details_raw": "\n Required:  0 Type:  color Default:  1 1 1 1 \n ",
+        "description": "Diffuse light color",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "specular",
+        "details_raw": "\n Required:  0 Type:  color Default:  0.100000001 0.100000001 0.100000001 1 \n ",
+        "description": "Specular light color",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "attenuation",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Light attenuation",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "range",
+            "details_raw": "\n Required:  1 Type:  double Default:  10 \n ",
+            "description": "Range of the light",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "linear",
+            "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+            "description": "The linear attenuation factor: 1 means attenuate evenly over the distance.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "constant",
+            "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+            "description": "The constant attenuation factor: 1.0 means never attenuate, 0.0 is complete attenutation.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "quadratic",
+            "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+            "description": "The quadratic attenuation factor: adds a curvature to the attenuation.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "direction",
+        "details_raw": "\n Required:  1 Type:  vector3 Default:  0 0 -1 \n ",
+        "description": "Direction of the light, only applicable for spot and directional lights.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "spot",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Spot light parameters",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "inner_angle",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "Angle covered by the bright inner cone",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "outer_angle",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "Angle covered by the outer cone",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "falloff",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "The rate of falloff between the inner and outer cones. 1.0 means a linear falloff, less means slower falloff, higher means faster falloff.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "pose",
+        "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+        "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "relative_to",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "rotation_format",
+            "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+            "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "degrees",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

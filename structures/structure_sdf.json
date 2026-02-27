@@ -1,0 +1,45 @@
+[
+  {
+    "node_type": "Element",
+    "name": "sdf",
+    "details_raw": "\n Required:  1 Type:  Default:  \n ",
+    "description": "SDFormat base element that can include one model, actor, light, or worlds. A user of multiple worlds could run parallel instances of simulation, or offer selection of a world at runtime.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "version",
+        "details_raw": "\n Required:  1 Type:  string Default:  1.12 \n ",
+        "description": "Version number of the SDFormat specification, consisting of major and minor versions delimited by a `.` character. A major version bump is required if older versions cannot be automatically converted to this version. A minor version bump is required when there are breaking changes that can be handled by the automatic conversion functionality encoded in the `*.convert` files.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "world",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The world element encapsulates an entire world description including: models, scene, physics, and plugins.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "model",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The model element defines a complete robot or any other physical object.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "actor",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "A special kind of model which can have a scripted motion. This includes both global waypoint type animations and skeleton animations.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "light",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The light element describes a light source.",
+        "children": []
+      }
+    ]
+  }
+]

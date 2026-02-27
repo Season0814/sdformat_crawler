@@ -1,0 +1,1057 @@
+[
+  {
+    "node_type": "Element",
+    "name": "link",
+    "details_raw": "\n Required:  * Type:  Default:  \n ",
+    "description": "A physical link with inertia, collision, and visual properties. A link must be a child of a model, and any number of links may exist in a model.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "name",
+        "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+        "description": "A unique name for the link within the scope of the model.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "gravity",
+        "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+        "description": "If true, the link is affected by gravity.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "enable_wind",
+        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+        "description": "If true, the link is affected by the wind.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "self_collide",
+        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+        "description": "If true, the link can collide with other links in the model. Two links within a model will collide if link1.self_collide OR link2.self_collide. Links connected by a joint will never collide.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "kinematic",
+        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+        "description": "If true, the link is kinematic only. A kinematic link does not react to forces such as gravity, applied force / torque, or influences from other dynamic bodies. The link can be animated by changing its position or velocity. Kinematic links can also be connected by joints, and moved by joint position or velocity commands.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "must_be_base_link",
+        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+        "description": "If true, the link will have 6DOF and be a direct child of world.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "velocity_decay",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Exponential damping of the link's velocity.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "linear",
+            "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+            "description": "Linear damping",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "angular",
+            "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+            "description": "Angular damping",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "pose",
+        "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+        "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "relative_to",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "rotation_format",
+            "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+            "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "degrees",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "inertial",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "The link's mass, position of its center of mass, its central inertia properties, and optionally its fluid added mass.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "auto",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "Set to true if you want automatic computation for the moments of inertia (ixx, iyy, izz) and products of inertia(ixy, iyz, ixz). Default value is false.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "mass",
+            "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+            "description": "The mass of the link.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "density",
+            "details_raw": "\n Required:  0 Type:  double Default:  1000 \n ",
+            "description": "Mass Density of the collision geometry. This is used to determine mass and inertia values during automatic calculation. This density value would be overwritten by the density value in collision. Default is the density of water 1000 kg/m^3.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "auto_inertia_params",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Parent tag to hold user-defined custom params for mesh inertia calculator The elements used under this would be overwritten by the elements in auto_inertia_params in collision.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pose",
+            "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+            "description": "This pose (translation, rotation) describes the position and orientation of the link's center-of-mass-frame C relative to the link-frame L. The first three components (x y z) specify the position vector from Lo (the link-frame origin) to Co (the link's center of mass) as `x L̂x + y L̂y + z L̂ᴢ`, where L̂x, L̂y, L̂ᴢ are link-frame L's orthogonal unit vectors. The subsequent values characterize C's orientation relative to link-frame L as a sequence of Euler rotations (r p y) documented in http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x y z w), where w is the scalar component.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "rotation_format",
+                "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "degrees",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "inertia",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "This link's moments of inertia ixx, iyy, izz and products of inertia ixy, ixz, iyz about Co (the link's center of mass) for the unit vectors Ĉx, Ĉy, Ĉᴢ fixed in the center-of-mass-frame C. Note: the orientation of Ĉx, Ĉy, Ĉᴢ relative to L̂x, L̂y, L̂ᴢ is specified by the `pose` tag. To avoid compatibility issues associated with the negative sign convention for product of inertia, align Ĉx, Ĉy, Ĉᴢ with principal inertia directions so that all the products of inertia are zero. For more information about this sign convention, see the following MathWorks documentation for working with CAD tools: https://www.mathworks.com/help/releases/R2021b/physmod/sm/ug/specify-custom-inertia.html#mw_b043ec69-835b-4ca9-8769-af2e6f1b190c",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "ixx",
+                "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+                "description": "The link's moment of inertia about Co (the link's center of mass) for Ĉx.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "ixy",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "The link's product of inertia about Co (the link's center of mass) for Ĉx and Ĉy, where the product of inertia convention -m x y (not +m x y) is used. If Ĉx or Ĉy is a principal inertia direction, ixy = 0.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "ixz",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "The link's product of inertia about Co (the link's center of mass) for Ĉx and Ĉz, where the product of inertia convention -m x z (not +m x z) is used. If Ĉx or Ĉz is a principal inertia direction, ixz = 0.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "iyy",
+                "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+                "description": "The link's moment of inertia about Co (the link's center of mass) for Ĉy.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "iyz",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "The link's product of inertia about Co (the link's center of mass) for Ĉy and Ĉz, where the product of inertia convention -m y z (not +m y z) is used. If Ĉy or Ĉz is a principal inertia direction, iyz = 0.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "izz",
+                "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+                "description": "The link's moment of inertia about Co (the link's center of mass) for Ĉz.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "fluid_added_mass",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "This link's fluid added mass matrix about the link's origin. This matrix represents the inertia of the fluid that is dislocated when the body moves. Added mass should be zero if the density of the surrounding fluid is negligible with respect to the body's density. The 6x6 matrix is symmetric, therefore only 21 unique elements can be set. The elements of the matrix follow the [x, y, z, p, q, r] notation, where [x, y, z] correspond to translation and [p, q, r] to rotation (i.e. roll, pitch, yaw).",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "xx",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the X axis due to linear acceleration in the X axis, in kg.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "xy",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the X axis due to linear acceleration in the Y axis, and vice-versa, in kg.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "xz",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the X axis due to linear acceleration in the Z axis, and vice-versa, in kg.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "xp",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the X axis due to angular acceleration about the X axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "xq",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the X axis due to angular acceleration about the Y axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "xr",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the X axis due to angular acceleration about the Z axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "yy",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Y axis due to linear acceleration in the Y axis, in kg.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "yz",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Y axis due to linear acceleration in the Z axis, and vice-versa, in kg.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "yp",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Y axis due to angular acceleration about the X axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "yq",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Y axis due to angular acceleration about the Y axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "yr",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Y axis due to angular acceleration about the Z axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "zz",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Z axis due to linear acceleration in the Z axis, in kg.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "zp",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Z axis due to angular acceleration about the X axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "zq",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Z axis due to angular acceleration about the Y axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "zr",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass in the Z axis due to angular acceleration about the Z axis, and vice-versa, in kg * m.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "pp",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass moment about the X axis due to angular acceleration about the X axis, in kg * m^2.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "pq",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass moment about the X axis due to angular acceleration about the Y axis, and vice-versa, in kg * m^2.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "pr",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass moment about the X axis due to angular acceleration about the Z axis, and vice-versa, in kg * m^2.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "qq",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass moment about the Y axis due to angular acceleration about the Y axis, in kg * m^2.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "qr",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass moment about the Y axis due to angular acceleration about the Z axis, and vice-versa, in kg * m^2.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rr",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "Added mass moment about the Z axis due to angular acceleration about the Z axis, in kg * m^2.",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "collision",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The collision properties of a link. Note that this can be different from the visual properties of a link, for example, simpler collision models are often used to reduce computation time.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "visual",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The visual properties of the link. This element specifies the shape of the object (box, cylinder, etc.) for visualization purposes.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "sensor",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "The sensor tag describes the type and properties of a sensor.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "projector",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "Name of the projector",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "texture",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "Texture name",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "fov",
+            "details_raw": "\n Required:  0 Type:  double Default:  0.78500000000000003 \n ",
+            "description": "Field of view",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "near_clip",
+            "details_raw": "\n Required:  0 Type:  double Default:  0.10000000000000001 \n ",
+            "description": "Near clip distance",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "far_clip",
+            "details_raw": "\n Required:  0 Type:  double Default:  10 \n ",
+            "description": "far clip distance",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "visibility_flags",
+            "details_raw": "\n Required:  0 Type:  unsigned int Default:  4294967295 \n ",
+            "description": "Visibility flags of a projector. When (camera's visibility_mask & projector's visibility_flags) evaluates to non-zero, the projector will be visible to the camera.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pose",
+            "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+            "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "relative_to",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rotation_format",
+                "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "degrees",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "plugin",
+            "details_raw": "\n Required:  * Type:  Default:  \n ",
+            "description": "A plugin is a dynamically loaded chunk of code. It can exist as a child of world, model, and sensor.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "name",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "A name for the plugin.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "filename",
+                "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                "description": "Name of the shared library to load. If the filename is not a full path name, the file will be searched for in the configuration paths.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "Elements",
+                "details_raw": "",
+                "description": "Arbitrary elements and attributes that can be used to configure the plugin",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "audio_sink",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "An audio sink.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "audio_source",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "An audio source.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "uri",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "URI of the audio media.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pitch",
+            "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+            "description": "Pitch for the audio media, in Hz",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "gain",
+            "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+            "description": "Gain for the audio media, in dB.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "contact",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "List of collision objects that will trigger audio playback.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "collision",
+                "details_raw": "\n Required:  + Type:  string Default:  __default__ \n ",
+                "description": "Name of child collision element that will trigger audio playback.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "loop",
+            "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+            "description": "True to make the audio source loop playback.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pose",
+            "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+            "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "relative_to",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rotation_format",
+                "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "degrees",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "battery",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "Description of a battery.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "Unique name for the battery.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "voltage",
+            "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+            "description": "Initial voltage in volts.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "light",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "The light element describes a light source.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "particle_emitter",
+        "details_raw": "\n Required:  * Type:  Default:  \n ",
+        "description": "A particle emitter that can be used to describe fog, smoke, and dust.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "A unique name for the particle emitter.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "type",
+            "details_raw": "\n Required:  1 Type:  string Default:  point \n ",
+            "description": "The type of a particle emitter. One of \"box\", \"cylinder\", \"ellipsoid\", or \"point\".",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "emitting",
+            "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+            "description": "True indicates that the particle emitter should generate particles when loaded",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "duration",
+            "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+            "description": "The number of seconds the emitter is active. A value less than or equal to zero means infinite duration.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "size",
+            "details_raw": "\n Required:  0 Type:  vector3 Default:  1 1 1 \n ",
+            "description": "The size of the emitter where the particles are sampled. Default value is (1, 1, 1). Note that the interpretation of the emitter area varies depending on the emmiter type: - point: The area is ignored. - box: The area is interpreted as width X height X depth. - cylinder: The area is interpreted as the bounding box of the cylinder. The cylinder is oriented along the Z-axis. - ellipsoid: The area is interpreted as the bounding box of an ellipsoid shaped area, i.e. a sphere or squashed-sphere area. The parameters are again identical to EM_BOX, except that the dimensions describe the widest points along each of the axes.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "particle_size",
+            "details_raw": "\n Required:  0 Type:  vector3 Default:  1 1 1 \n ",
+            "description": "The particle dimensions (width, height, depth).",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "lifetime",
+            "details_raw": "\n Required:  0 Type:  double Default:  5 \n ",
+            "description": "The number of seconds each particle will ’live’ for before being destroyed. This value must be greater than zero.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "rate",
+            "details_raw": "\n Required:  0 Type:  double Default:  10 \n ",
+            "description": "The number of particles per second that should be emitted.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "min_velocity",
+            "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+            "description": "Sets a minimum velocity for each particle (m/s).",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "max_velocity",
+            "details_raw": "\n Required:  0 Type:  double Default:  1 \n ",
+            "description": "Sets a maximum velocity for each particle (m/s).",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "scale_rate",
+            "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+            "description": "Sets the amount by which to scale the particles in both x and y direction per second.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "color_start",
+            "details_raw": "\n Required:  0 Type:  color Default:  1 1 1 1 \n ",
+            "description": "Sets the starting color for all particles emitted. The actual color will be interpolated between this color and the one set under color_end. Color::White is the default color for the particles unless a specific function is used. To specify a color, RGB values should be passed in. For example, to specify red, a user should enter:",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "color_end",
+            "details_raw": "\n Required:  0 Type:  color Default:  1 1 1 1 \n ",
+            "description": "Sets the end color for all particles emitted. The actual color will be interpolated between this color and the one set under color_start. Color::White is the default color for the particles unless a specific function is used (see color_start for more information about defining custom colors with RGB values). Note that this function overrides the particle colors set with color_range_image.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "color_range_image",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "Sets the path to the color image used as an affector. This affector modifies the color of particles in flight. The colors are taken from a specified image file. The range of color values begins from the left side of the image and moves to the right over the lifetime of the particle, therefore only the horizontal dimension of the image is used. Note that this function overrides the particle colors set with color_start and color_end.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "topic",
+            "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+            "description": "Topic used to update particle emitter properties at runtime. The default topic is /model/{model_name}/particle_emitter/{emitter_name} Note that the emitter id and name may not be changed.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "particle_scatter_ratio",
+            "details_raw": "\n Required:  0 Type:  float Default:  0.649999976 \n ",
+            "description": "This is used to determine the ratio of particles that will be detected by sensors. Increasing the ratio means there is a higher chance of particles reflecting and interfering with depth sensing, making the emitter appear more dense. Decreasing the ratio decreases the chance of particles reflecting and interfering with depth sensing, making it appear less dense.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "pose",
+            "details_raw": "\n Required:  0 Type:  pose Default:  0 0 0 0 0 0 \n ",
+            "description": "A pose (translation, rotation) expressed in the frame named by @relative_to. The first three components (x, y, z) represent the position of the element's origin (in the @relative_to frame). The rotation component represents the orientation of the element as either a sequence of Euler rotations (r, p, y), see http://sdformat.org/tutorials?tut=specify_pose, or as a quaternion (x, y, z, w), where w is the real component.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "relative_to",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "If specified, this pose is expressed in the named frame. The named frame must be declared within the same scope (world/model) as the element that has its pose specified by this tag. If missing, the pose is expressed in the frame of the parent XML element of the element that contains the pose. For exceptions to this rule and more details on the default behavior, see http://sdformat.org/tutorials?tut=pose_frame_semantics. Note that @relative_to merely affects an element's initial pose and does not affect the element's dynamic movement thereafter. New in v1.8: @relative_to may use frames of nested scopes. In this case, the frame is specified using `::` as delimiter to define the scope of the frame, e.g. `nested_model_A::nested_model_B::awesome_frame`.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "rotation_format",
+                "details_raw": "\n Required:  0 Type:  string Default:  euler_rpy \n ",
+                "description": "'euler_rpy' by default. Supported rotation formats are 'euler_rpy', Euler angles representation in roll, pitch, yaw. The pose is expected to have 6 values. 'quat_xyzw', Quaternion representation in x, y, z, w. The pose is expected to have 7 values.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "degrees",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Whether or not the euler angles are in degrees, otherwise they will be interpreted as radians by default.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "material",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "The material of the visual element.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "script",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "Name of material from an installed script file. This will override the color element if the script exists.",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "uri",
+                    "details_raw": "\n Required:  + Type:  string Default:  __default__ \n ",
+                    "description": "URI of the material script file",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "name",
+                    "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+                    "description": "Name of the script within the script file",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "shader",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "type",
+                    "details_raw": "\n Required:  1 Type:  string Default:  pixel \n ",
+                    "description": "vertex, pixel, normal_map_object_space, normal_map_tangent_space",
+                    "children": []
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "normal_map",
+                    "details_raw": "\n Required:  0 Type:  string Default:  __default__ \n ",
+                    "description": "filename of the normal map",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "render_order",
+                "details_raw": "\n Required:  0 Type:  float Default:  0 \n ",
+                "description": "Set render order for coplanar polygons. The higher value will be rendered on top of the other coplanar polygons",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "lighting",
+                "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+                "description": "If false, dynamic lighting will be disabled",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "ambient",
+                "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+                "description": "The ambient color of a material specified by set of four numbers representing red/green/blue, each in the range of [0,1].",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "diffuse",
+                "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+                "description": "The diffuse color of a material specified by set of four numbers representing red/green/blue/alpha, each in the range of [0,1].",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "specular",
+                "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+                "description": "The specular color of a material specified by set of four numbers representing red/green/blue/alpha, each in the range of [0,1].",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "shininess",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "The specular exponent of a material",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "emissive",
+                "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+                "description": "The emissive color of a material specified by set of four numbers representing red/green/blue, each in the range of [0,1].",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "double_sided",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "If true, the mesh that this material is applied to will be rendered as double sided",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "pbr",
+                "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                "description": "Physically Based Rendering (PBR) material. There are two PBR workflows: metal and specular. While both workflows and their parameters can be specified at the same time, typically only one of them will be used (depending on the underlying renderer capability). It is also recommended to use the same workflow for all materials in the world.",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "metal",
+                    "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                    "description": "PBR using the Metallic/Roughness workflow.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "albedo_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the diffuse/albedo map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "roughness_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the roughness map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "roughness",
+                        "details_raw": "\n Required:  0 Type:  string Default:  0.5 \n ",
+                        "description": "Material roughness in the range of [0,1], where 0 represents a smooth surface and 1 represents a rough surface. This is the inverse of a specular map in a PBR specular workflow.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "metalness_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the metalness map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "metalness",
+                        "details_raw": "\n Required:  0 Type:  string Default:  0.5 \n ",
+                        "description": "Material metalness in the range of [0,1], where 0 represents non-metal and 1 represents raw metal",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "environment_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the environment / reflection map, typically in the form of a cubemap",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "ambient_occlusion_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the ambient occlusion map. The map defines the amount of ambient lighting on the surface.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "normal_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the normal map. The normals can be in the object space or tangent space as specified in the 'type' attribute",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "type",
+                            "details_raw": "\n Required:  0 Type:  string Default:  tangent \n ",
+                            "description": "The space that the normals are in. Values are: 'object' or 'tangent'",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "emissive_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the emissive map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "light_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the light map. The light map is a prebaked light texture that is applied over the albedo map",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "uv_set",
+                            "details_raw": "\n Required:  0 Type:  unsigned int Default:  0 \n ",
+                            "description": "Index of the texture coordinate set to use.",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "node_type": "Element",
+                    "name": "specular",
+                    "details_raw": "\n Required:  0 Type:  Default:  \n ",
+                    "description": "PBR using the Specular/Glossiness workflow.",
+                    "children": [
+                      {
+                        "node_type": "Element",
+                        "name": "albedo_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the diffuse/albedo map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "specular_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the specular map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "glossiness_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the glossiness map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "glossiness",
+                        "details_raw": "\n Required:  0 Type:  string Default:  0 \n ",
+                        "description": "Material glossiness in the range of [0-1], where 0 represents a rough surface and 1 represents a smooth surface. This is the inverse of a roughness map in a PBR metal workflow.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "environment_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the environment / reflection map, typically in the form of a cubemap",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "ambient_occlusion_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the ambient occlusion map. The map defines the amount of ambient lighting on the surface.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "normal_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the normal map. The normals can be in the object space or tangent space as specified in the 'type' attribute",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "type",
+                            "details_raw": "\n Required:  0 Type:  string Default:  tangent \n ",
+                            "description": "The space that the normals are in. Values are: 'object' or 'tangent'",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "emissive_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the emissive map.",
+                        "children": []
+                      },
+                      {
+                        "node_type": "Element",
+                        "name": "light_map",
+                        "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                        "description": "Filename of the light map. The light map is a prebaked light texture that is applied over the albedo map",
+                        "children": [
+                          {
+                            "node_type": "Element",
+                            "name": "uv_set",
+                            "details_raw": "\n Required:  0 Type:  unsigned int Default:  0 \n ",
+                            "description": "Index of the texture coordinate set to use.",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
