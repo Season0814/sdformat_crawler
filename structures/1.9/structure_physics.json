@@ -1,0 +1,391 @@
+[
+  {
+    "node_type": "Element",
+    "name": "physics",
+    "details_raw": "\n Required:  1 Type:  Default:  \n ",
+    "description": "The physics tag specifies the type and properties of the dynamics engine.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "name",
+        "details_raw": "\n Required:  0 Type:  string Default:  default_physics \n ",
+        "description": "The name of this set of physics parameters.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "default",
+        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+        "description": "If true, this physics element is set as the default physics profile for the world. If multiple default physics elements exist, the first element marked as default is chosen. If no default physics element exists, the first physics element is chosen.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "type",
+        "details_raw": "\n Required:  1 Type:  string Default:  ode \n ",
+        "description": "The type of the dynamics engine. Current options are ode, bullet, simbody and dart. Defaults to ode if left unspecified.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "max_step_size",
+        "details_raw": "\n Required:  1 Type:  double Default:  0.001 \n ",
+        "description": "Maximum time step size at which every system in simulation can interact with the states of the world. (was physics.sdf's dt).",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "real_time_factor",
+        "details_raw": "\n Required:  1 Type:  double Default:  1 \n ",
+        "description": "target simulation speedup factor, defined by ratio of simulation time to real-time.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "real_time_update_rate",
+        "details_raw": "\n Required:  1 Type:  double Default:  1000 \n ",
+        "description": "Rate at which to update the physics engine (UpdatePhysics calls per real-time second). (was physics.sdf's update_rate).",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "max_contacts",
+        "details_raw": "\n Required:  0 Type:  int Default:  20 \n ",
+        "description": "Maximum number of contacts allowed between two entities. This value can be over ridden by a max_contacts element in a collision element.",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "dart",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "DART specific physics properties",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "solver",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "solver_type",
+                "details_raw": "\n Required:  1 Type:  string Default:  dantzig \n ",
+                "description": "One of the following types: pgs, dantzig. PGS stands for Projected Gauss-Seidel.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "collision_detector",
+            "details_raw": "\n Required:  0 Type:  string Default:  fcl \n ",
+            "description": "Specify collision detector for DART to use. Can be dart, fcl, bullet or ode.",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "simbody",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Simbody specific physics properties",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "min_step_size",
+            "details_raw": "\n Required:  0 Type:  double Default:  0.0001 \n ",
+            "description": "(Currently not used in simbody) The time duration which advances with each iteration of the dynamics engine, this has to be no bigger than max_step_size under physics block. If left unspecified, min_step_size defaults to max_step_size.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "accuracy",
+            "details_raw": "\n Required:  0 Type:  double Default:  0.001 \n ",
+            "description": "Roughly the relative error of the system. -LOG(accuracy) is roughly the number of significant digits.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "max_transient_velocity",
+            "details_raw": "\n Required:  0 Type:  double Default:  0.01 \n ",
+            "description": "Tolerable \"slip\" velocity allowed by the solver when static friction is supposed to hold object in place.",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "contact",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "Relationship among dissipation, coef. restitution, etc.\n        d = dissipation coefficient (1/velocity)\n        vc = capture velocity (velocity where e=e_max)\n        vp = plastic velocity (smallest v where e=e_min) > vc\n        Assume real COR=1 when v=0.\n        e_min = given minimum COR, at v >= vp (a.k.a. plastic_coef_restitution)\n        d = slope = (1-e_min)/vp\n        OR, e_min = 1 - d*vp\n        e_max = maximum COR = 1-d*vc, reached at v=vc\n        e = 0,                       v <= vc\n          = 1 - d*v,               vc < v < vp\n          = e_min,                   v >= vp\n\n        dissipation factor = d*min(v,vp)   [compliant]\n        cor = e                            [rigid]\n\n        Combining rule e = 0,               e1==e2==0\n                         = 2*e1*e2/(e1+e2), otherwise",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "stiffness",
+                "details_raw": "\n Required:  0 Type:  double Default:  100000000 \n ",
+                "description": "Default contact material stiffness (force/dist or torque/radian).",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "dissipation",
+                "details_raw": "\n Required:  0 Type:  double Default:  100 \n ",
+                "description": "dissipation coefficient to be used in compliant contact; if not given it is (1-min_cor)/plastic_impact_velocity",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "plastic_coef_restitution",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.5 \n ",
+                "description": "this is the COR to be used at high velocities for rigid impacts; if not given it is 1 - dissipation*plastic_impact_velocity",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "plastic_impact_velocity",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.5 \n ",
+                "description": "smallest impact velocity at which min COR is reached; set to zero if you want the min COR always to be used",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "static_friction",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.90000000000000002 \n ",
+                "description": "static friction (mu_s) as described by this plot: http://gazebosim.org/wiki/File:Stribeck_friction.png",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "dynamic_friction",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.90000000000000002 \n ",
+                "description": "dynamic friction (mu_d) as described by this plot: http://gazebosim.org/wiki/File:Stribeck_friction.png",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "viscous_friction",
+                "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+                "description": "viscous friction (mu_v) with units of (1/velocity) as described by this plot: http://gazebosim.org/wiki/File:Stribeck_friction.png",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "override_impact_capture_velocity",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.001 \n ",
+                "description": "for rigid impacts only, impact velocity at which COR is set to zero; normally inherited from global default but can be overridden here. Combining rule: use larger velocity",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "override_stiction_transition_velocity",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.001 \n ",
+                "description": "This is the largest slip velocity at which we'll consider a transition to stiction. Normally inherited from a global default setting. For a continuous friction model this is the velocity at which the max static friction force is reached. Combining rule: use larger velocity",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "bullet",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Bullet specific physics properties",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "solver",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "type",
+                "details_raw": "\n Required:  1 Type:  string Default:  sequential_impulse \n ",
+                "description": "One of the following types: sequential_impulse only.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "min_step_size",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.0001 \n ",
+                "description": "The time duration which advances with each iteration of the dynamics engine, this has to be no bigger than max_step_size under physics block. If left unspecified, min_step_size defaults to max_step_size.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "iters",
+                "details_raw": "\n Required:  1 Type:  int Default:  50 \n ",
+                "description": "Number of iterations for each step. A higher number produces greater accuracy at a performance cost.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "sor",
+                "details_raw": "\n Required:  1 Type:  double Default:  1.3 \n ",
+                "description": "Set the successive over-relaxation parameter.",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "constraints",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "Bullet constraint parameters.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "cfm",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Constraint force mixing parameter. See the ODE page for more information.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "erp",
+                "details_raw": "\n Required:  1 Type:  double Default:  0.20000000000000001 \n ",
+                "description": "Error reduction parameter. See the ODE page for more information.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "contact_surface_layer",
+                "details_raw": "\n Required:  1 Type:  double Default:  0.001 \n ",
+                "description": "The depth of the surface layer around all geometry objects. Contacts are allowed to sink into the surface layer up to the given depth before coming to rest. The default value is zero. Increasing this to some small value (e.g. 0.001) can help prevent jittering problems due to contacts being repeatedly made and broken.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "split_impulse",
+                "details_raw": "\n Required:  1 Type:  bool Default:  true \n ",
+                "description": "Similar to ODE's max_vel implementation. See http://web.archive.org/web/20120430155635/http://bulletphysics.org/mediawiki-1.5.8/index.php/BtContactSolverInfo#Split_Impulse for more information.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "split_impulse_penetration_threshold",
+                "details_raw": "\n Required:  1 Type:  double Default:  -0.01 \n ",
+                "description": "Similar to ODE's max_vel implementation. See http://web.archive.org/web/20120430155635/http://bulletphysics.org/mediawiki-1.5.8/index.php/BtContactSolverInfo#Split_Impulse for more information.",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "ode",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "ODE specific physics properties",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "solver",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "type",
+                "details_raw": "\n Required:  1 Type:  string Default:  quick \n ",
+                "description": "One of the following types: world, quick",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "min_step_size",
+                "details_raw": "\n Required:  0 Type:  double Default:  0.0001 \n ",
+                "description": "The time duration which advances with each iteration of the dynamics engine, this has to be no bigger than max_step_size under physics block. If left unspecified, min_step_size defaults to max_step_size.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "island_threads",
+                "details_raw": "\n Required:  0 Type:  int Default:  0 \n ",
+                "description": "Number of threads to use for \"islands\" of disconnected models.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "iters",
+                "details_raw": "\n Required:  1 Type:  int Default:  50 \n ",
+                "description": "Number of iterations for each step. A higher number produces greater accuracy at a performance cost.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "precon_iters",
+                "details_raw": "\n Required:  0 Type:  int Default:  0 \n ",
+                "description": "Experimental parameter.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "sor",
+                "details_raw": "\n Required:  1 Type:  double Default:  1.3 \n ",
+                "description": "Set the successive over-relaxation parameter.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "thread_position_correction",
+                "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+                "description": "Flag to use threading to speed up position correction computation.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "use_dynamic_moi_rescaling",
+                "details_raw": "\n Required:  1 Type:  bool Default:  false \n ",
+                "description": "Flag to enable dynamic rescaling of moment of inertia in constrained directions. See gazebo pull request 1114 for the implementation of this feature. https://osrf-migration.github.io/gazebo-gh-pages/#!/osrf/gazebo/pull-request/1114",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "friction_model",
+                "details_raw": "\n Required:  0 Type:  string Default:  pyramid_model \n ",
+                "description": "Name of ODE friction model to use. Valid values include: pyramid_model: (default) friction forces limited in two directions in proportion to normal force. box_model: friction forces limited to constant in two directions. cone_model: friction force magnitude limited in proportion to normal force. See gazebo pull request 1522 for the implementation of this feature. https://osrf-migration.github.io/gazebo-gh-pages/#!/osrf/gazebo/pull-request/1522 https://github.com/osrf/gazebo/commit/968dccafdfbfca09c9b3326f855612076fed7e6f",
+                "children": []
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "constraints",
+            "details_raw": "\n Required:  1 Type:  Default:  \n ",
+            "description": "ODE constraint parameters.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "cfm",
+                "details_raw": "\n Required:  1 Type:  double Default:  0 \n ",
+                "description": "Constraint force mixing parameter. See the ODE page for more information.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "erp",
+                "details_raw": "\n Required:  1 Type:  double Default:  0.20000000000000001 \n ",
+                "description": "Error reduction parameter. See the ODE page for more information.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "contact_max_correcting_vel",
+                "details_raw": "\n Required:  1 Type:  double Default:  100 \n ",
+                "description": "The maximum correcting velocities allowed when resolving contacts.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "contact_surface_layer",
+                "details_raw": "\n Required:  1 Type:  double Default:  0.001 \n ",
+                "description": "The depth of the surface layer around all geometry objects. Contacts are allowed to sink into the surface layer up to the given depth before coming to rest. The default value is zero. Increasing this to some small value (e.g. 0.001) can help prevent jittering problems due to contacts being repeatedly made and broken.",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,299 @@
+[
+  {
+    "node_type": "Element",
+    "name": "material",
+    "details_raw": "\n Required:  0 Type:  Default:  \n ",
+    "description": "The material of the visual element.",
+    "children": [
+      {
+        "node_type": "Element",
+        "name": "script",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Name of material from an installed script file. This will override the color element if the script exists.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "uri",
+            "details_raw": "\n Required:  + Type:  string Default:  __default__ \n ",
+            "description": "URI of the material script file",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "name",
+            "details_raw": "\n Required:  1 Type:  string Default:  __default__ \n ",
+            "description": "Name of the script within the script file",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "shader",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "type",
+            "details_raw": "\n Required:  1 Type:  string Default:  pixel \n ",
+            "description": "vertex, pixel, normal_map_object_space, normal_map_tangent_space",
+            "children": []
+          },
+          {
+            "node_type": "Element",
+            "name": "normal_map",
+            "details_raw": "\n Required:  0 Type:  string Default:  __default__ \n ",
+            "description": "filename of the normal map",
+            "children": []
+          }
+        ]
+      },
+      {
+        "node_type": "Element",
+        "name": "render_order",
+        "details_raw": "\n Required:  0 Type:  float Default:  0 \n ",
+        "description": "Set render order for coplanar polygons. The higher value will be rendered on top of the other coplanar polygons",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "lighting",
+        "details_raw": "\n Required:  0 Type:  bool Default:  true \n ",
+        "description": "If false, dynamic lighting will be disabled",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "ambient",
+        "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+        "description": "The ambient color of a material specified by set of four numbers representing red/green/blue, each in the range of [0,1].",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "diffuse",
+        "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+        "description": "The diffuse color of a material specified by set of four numbers representing red/green/blue/alpha, each in the range of [0,1].",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "specular",
+        "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+        "description": "The specular color of a material specified by set of four numbers representing red/green/blue/alpha, each in the range of [0,1].",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "shininess",
+        "details_raw": "\n Required:  0 Type:  double Default:  0 \n ",
+        "description": "The specular exponent of a material",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "emissive",
+        "details_raw": "\n Required:  0 Type:  color Default:  0 0 0 1 \n ",
+        "description": "The emissive color of a material specified by set of four numbers representing red/green/blue, each in the range of [0,1].",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "double_sided",
+        "details_raw": "\n Required:  0 Type:  bool Default:  false \n ",
+        "description": "If true, the mesh that this material is applied to will be rendered as double sided",
+        "children": []
+      },
+      {
+        "node_type": "Element",
+        "name": "pbr",
+        "details_raw": "\n Required:  0 Type:  Default:  \n ",
+        "description": "Physically Based Rendering (PBR) material. There are two PBR workflows: metal and specular. While both workflows and their parameters can be specified at the same time, typically only one of them will be used (depending on the underlying renderer capability). It is also recommended to use the same workflow for all materials in the world.",
+        "children": [
+          {
+            "node_type": "Element",
+            "name": "metal",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "PBR using the Metallic/Roughness workflow.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "albedo_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the diffuse/albedo map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "roughness_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the roughness map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "roughness",
+                "details_raw": "\n Required:  0 Type:  string Default:  0.5 \n ",
+                "description": "Material roughness in the range of [0,1], where 0 represents a smooth surface and 1 represents a rough surface. This is the inverse of a specular map in a PBR specular workflow.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "metalness_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the metalness map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "metalness",
+                "details_raw": "\n Required:  0 Type:  string Default:  0.5 \n ",
+                "description": "Material metalness in the range of [0,1], where 0 represents non-metal and 1 represents raw metal",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "environment_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the environment / reflection map, typically in the form of a cubemap",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "ambient_occlusion_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the ambient occlusion map. The map defines the amount of ambient lighting on the surface.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "normal_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the normal map. The normals can be in the object space or tangent space as specified in the 'type' attribute",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "type",
+                    "details_raw": "\n Required:  0 Type:  string Default:  tangent \n ",
+                    "description": "The space that the normals are in. Values are: 'object' or 'tangent'",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "emissive_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the emissive map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "light_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the light map. The light map is a prebaked light texture that is applied over the albedo map",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "uv_set",
+                    "details_raw": "\n Required:  0 Type:  unsigned int Default:  0 \n ",
+                    "description": "Index of the texture coordinate set to use.",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node_type": "Element",
+            "name": "specular",
+            "details_raw": "\n Required:  0 Type:  Default:  \n ",
+            "description": "PBR using the Specular/Glossiness workflow.",
+            "children": [
+              {
+                "node_type": "Element",
+                "name": "albedo_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the diffuse/albedo map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "specular_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the specular map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "glossiness_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the glossiness map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "glossiness",
+                "details_raw": "\n Required:  0 Type:  string Default:  0 \n ",
+                "description": "Material glossiness in the range of [0-1], where 0 represents a rough surface and 1 represents a smooth surface. This is the inverse of a roughness map in a PBR metal workflow.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "environment_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the environment / reflection map, typically in the form of a cubemap",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "ambient_occlusion_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the ambient occlusion map. The map defines the amount of ambient lighting on the surface.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "normal_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the normal map. The normals can be in the object space or tangent space as specified in the 'type' attribute",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "type",
+                    "details_raw": "\n Required:  0 Type:  string Default:  tangent \n ",
+                    "description": "The space that the normals are in. Values are: 'object' or 'tangent'",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "node_type": "Element",
+                "name": "emissive_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the emissive map.",
+                "children": []
+              },
+              {
+                "node_type": "Element",
+                "name": "light_map",
+                "details_raw": "\n Required:  0 Type:  string Default:  \n ",
+                "description": "Filename of the light map. The light map is a prebaked light texture that is applied over the albedo map",
+                "children": [
+                  {
+                    "node_type": "Element",
+                    "name": "uv_set",
+                    "details_raw": "\n Required:  0 Type:  unsigned int Default:  0 \n ",
+                    "description": "Index of the texture coordinate set to use.",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

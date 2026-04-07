@@ -36,7 +36,19 @@ def get_all_element_names(base_url):
         return []
 
 def main():
-    base_url = "https://sdformat.org/spec/1.12/"
+    import argparse
+    parser = argparse.ArgumentParser(description="Extract SDFormat structures for a specific version.")
+    parser.add_argument("version", nargs="?", default="1.12", help="SDFormat version (e.g., 1.9, 1.12)")
+    args = parser.parse_args()
+    
+    version = args.version
+    base_url = f"https://sdformat.org/spec/{version}/"
+    output_dir = os.path.join("structures", version)
+    
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+        print(f"Created directory: {output_dir}")
+        
     print(f"Fetching element list from {base_url}...")
     elements = get_all_element_names(base_url)
     
@@ -58,7 +70,7 @@ def main():
         try:
             struct = extract_structure_from_url(url, name)
             if struct:
-                filename = f"structure_{name}.json"
+                filename = os.path.join(output_dir, f"structure_{name}.json")
                 with open(filename, "w", encoding="utf-8") as f:
                     json.dump(struct, f, indent=2, ensure_ascii=False)
                 print(f"Saved {filename}")
