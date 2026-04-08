@@ -5,9 +5,14 @@ import re
 import shutil
 import copy
 import sys
+from pathlib import Path
 
 # Increase recursion limit just in case, though we should fix the logic
 sys.setrecursionlimit(2000)
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+MERGED_DIR = PROJECT_ROOT / "data" / "merged"
+ENRICH_TARGETS_DIR = MERGED_DIR / "enrich_targets"
 
 # 复用 BetterSDFParser，但稍作修改以适应多页面抓取
 class SDFParser(HTMLParser):
@@ -244,7 +249,7 @@ def merge_structure(main_struct, sub_structs):
 def main():
     # 1. 读取现有的 structure.json
     try:
-        with open("structure.json", "r", encoding="utf-8") as f:
+        with open(MERGED_DIR / "structure.json", "r", encoding="utf-8") as f:
             main_struct = json.load(f)
     except FileNotFoundError:
         print("structure.json not found. Run extract_structure.py first.")
@@ -268,6 +273,7 @@ def main():
     }
     
     sub_structs = {}
+    ENRICH_TARGETS_DIR.mkdir(parents=True, exist_ok=True)
     
     for name, url in targets.items():
         print(f"Extracting {name}...")
@@ -275,7 +281,7 @@ def main():
         if struct:
             sub_structs[name] = struct
             # 同时保存一份单独的文件以备查
-            with open(f"structure_{name}.json", "w", encoding="utf-8") as f:
+            with open(ENRICH_TARGETS_DIR / f"structure_{name}.json", "w", encoding="utf-8") as f:
                 json.dump(struct, f, indent=2, ensure_ascii=False)
         else:
             print(f"Warning: No structure found for {name}")
@@ -285,14 +291,13 @@ def main():
     merged_struct = merge_structure(main_struct, sub_structs)
     
     # 4. 保存
-    with open("structure_merged.json", "w", encoding="utf-8") as f:
+    with open(MERGED_DIR / "structure_merged.json", "w", encoding="utf-8") as f:
         json.dump(merged_struct, f, indent=2, ensure_ascii=False)
     
     # 覆盖原文件？或者保留 merged
     # 为了后续脚本兼容，最好覆盖 structure.json，但先备份
-    import shutil
-    shutil.copy("structure.json", "structure_backup.json")
-    shutil.copy("structure_merged.json", "structure.json")
+    shutil.copy(MERGED_DIR / "structure.json", MERGED_DIR / "structure_backup.json")
+    shutil.copy(MERGED_DIR / "structure_merged.json", MERGED_DIR / "structure.json")
     
     print("Done. structure.json updated.")
 

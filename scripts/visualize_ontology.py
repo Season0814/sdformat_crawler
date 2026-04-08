@@ -1,9 +1,11 @@
 import re
 import json
 from collections import deque, defaultdict
+from pathlib import Path
 
-TTL_PATH = "sdformat_model.ttl"
-HTML_OUT = "ontology_graph.html"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+TTL_PATH = PROJECT_ROOT / "outputs" / "ontology" / "sdformat_model.ttl"
+HTML_OUT = PROJECT_ROOT / "outputs" / "html" / "ontology_graph.html"
 
 
 def parse_ttl(path):

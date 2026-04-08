@@ -3,9 +3,10 @@ import requests
 from html.parser import HTMLParser
 import sys
 import os
+from pathlib import Path
 
-# Add current directory to path to allow import
-sys.path.append(os.getcwd())
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from enrich_structure import extract_structure_from_url
 
@@ -43,10 +44,10 @@ def main():
     
     version = args.version
     base_url = f"https://sdformat.org/spec/{version}/"
-    output_dir = os.path.join("structures", version)
+    output_dir = PROJECT_ROOT / "data" / "structures" / version
     
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True, exist_ok=True)
         print(f"Created directory: {output_dir}")
         
     print(f"Fetching element list from {base_url}...")
@@ -70,7 +71,7 @@ def main():
         try:
             struct = extract_structure_from_url(url, name)
             if struct:
-                filename = os.path.join(output_dir, f"structure_{name}.json")
+                filename = output_dir / f"structure_{name}.json"
                 with open(filename, "w", encoding="utf-8") as f:
                     json.dump(struct, f, indent=2, ensure_ascii=False)
                 print(f"Saved {filename}")

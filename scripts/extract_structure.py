@@ -1,5 +1,10 @@
 from html.parser import HTMLParser
 import json
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PAGE_CONTENT_PATH = PROJECT_ROOT / "outputs" / "raw" / "page_content.html"
+STRUCTURE_OUT_PATH = PROJECT_ROOT / "data" / "merged" / "structure.json"
 
 class SDFParser(HTMLParser):
     def __init__(self):
@@ -304,11 +309,12 @@ class BetterSDFParser(HTMLParser):
 
 def main():
     parser = BetterSDFParser()
-    with open("page_content.html", "r", encoding="utf-8") as f:
+    with open(PAGE_CONTENT_PATH, "r", encoding="utf-8") as f:
         content = f.read()
     parser.feed(content)
     
-    with open("structure.json", "w", encoding="utf-8") as f:
+    STRUCTURE_OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(STRUCTURE_OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(parser.root_list, f, indent=2, ensure_ascii=False)
     
     print("Structure extracted.")

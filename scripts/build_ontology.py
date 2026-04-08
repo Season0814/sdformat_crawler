@@ -1,6 +1,11 @@
 import json
 import re
 import xml.etree.ElementTree as ET
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+STRUCTURE_JSON_PATH = PROJECT_ROOT / "data" / "merged" / "structure.json"
+ONTOLOGY_OUT_DIR = PROJECT_ROOT / "outputs" / "ontology"
 
 # 本体前缀
 PREFIXES = """@prefix : <http://sdformat.org/spec/model#> .
@@ -226,157 +231,6 @@ def build_ontology_rdfxml(structure_file, output_file):
     tree.write(output_file, encoding="utf-8", xml_declaration=True)
     print(f"Ontology saved to {output_file}")
 
-def build_ontology_rdfxml_edges_only(structure_file, output_file):
-    with open(structure_file, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    ns = {
-        "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-        "owl": "http://www.w3.org/2002/07/owl#",
-        "xsd": "http://www.w3.org/2001/XMLSchema#",
-    }
-    base = "http://sdformat.org/spec/model"
-    base_hash = f"{base}#"
-
-    for prefix, uri in ns.items():
-        ET.register_namespace(prefix, uri)
-
-    rdf_root = ET.Element(ET.QName(ns["rdf"], "RDF"))
-    ontology = ET.SubElement(rdf_root, ET.QName(ns["owl"], "Ontology"))
-    ontology.set(ET.QName(ns["rdf"], "about"), base)
-
-    classes_defined = set()
-    class_elements = {}
-    properties_defined = set()
-    property_elements = {}
-
-    def iri(local_name):
-        return f"{base_hash}{local_name}"
-
-    def add_comment(element, text):
-        if text is None:
-            return
-        t = str(text).strip()
-        if not t:
-            return
-        comment = ET.SubElement(element, ET.QName(ns["rdfs"], "comment"))
-        comment.text = t
-
-    def add_label(element, text):
-        if text is None:
-            return
-        t = str(text).strip()
-        if not t:
-            return
-        label = ET.SubElement(element, ET.QName(ns["rdfs"], "label"))
-        label.text = t
-
-    def define_class(class_name, description, label_text=None):
-        if class_name in classes_defined:
-            return class_elements[class_name]
-        cls_el = ET.SubElement(rdf_root, ET.QName(ns["owl"], "Class"))
-        cls_el.set(ET.QName(ns["rdf"], "about"), iri(class_name))
-        add_comment(cls_el, description)
-        if label_text is not None:
-            add_label(cls_el, label_text)
-        classes_defined.add(class_name)
-        class_elements[class_name] = cls_el
-        return cls_el
-
-    def define_object_property(prop_name, domain_class, range_class, description, label_text=None):
-        if prop_name in properties_defined:
-            return property_elements[prop_name]
-        prop_el = ET.SubElement(rdf_root, ET.QName(ns["owl"], "ObjectProperty"))
-        prop_el.set(ET.QName(ns["rdf"], "about"), iri(prop_name))
-        domain_el = ET.SubElement(prop_el, ET.QName(ns["rdfs"], "domain"))
-        domain_el.set(ET.QName(ns["rdf"], "resource"), iri(domain_class))
-        range_el = ET.SubElement(prop_el, ET.QName(ns["rdfs"], "range"))
-        range_el.set(ET.QName(ns["rdf"], "resource"), iri(range_class))
-        add_comment(prop_el, description)
-        if label_text is not None:
-            add_label(prop_el, label_text)
-        properties_defined.add(prop_name)
-        property_elements[prop_name] = prop_el
-        return prop_el
-
-    def define_datatype_property(prop_name, domain_class, range_xsd_uri, description, label_text=None):
-        if prop_name in properties_defined:
-            return property_elements[prop_name]
-        prop_el = ET.SubElement(rdf_root, ET.QName(ns["owl"], "DatatypeProperty"))
-        prop_el.set(ET.QName(ns["rdf"], "about"), iri(prop_name))
-        domain_el = ET.SubElement(prop_el, ET.QName(ns["rdfs"], "domain"))
-        domain_el.set(ET.QName(ns["rdf"], "resource"), iri(domain_class))
-        range_el = ET.SubElement(prop_el, ET.QName(ns["rdfs"], "range"))
-        range_el.set(ET.QName(ns["rdf"], "resource"), range_xsd_uri)
-        add_comment(prop_el, description)
-        if label_text is not None:
-            add_label(prop_el, label_text)
-        properties_defined.add(prop_name)
-        property_elements[prop_name] = prop_el
-        return prop_el
-
-    def process_node(node, parent_class_name=None):
-        node_name = node.get("name")
-        node_type = node.get("node_type")
-        description = node.get("description", "")
-        details = clean_details(node.get("details_raw", ""))
-        sdf_type = details.get("type", "")
-        children = node.get("children", [])
-
-        is_complex = len(children) > 0
-
-        if parent_class_name is None:
-            class_name = (node_name or "").capitalize()
-            if not class_name:
-                return
-            define_class(class_name, description, label_text=class_name)
-            for child in children:
-                process_node(child, class_name)
-            return
-
-        if not node_name:
-            return
-
-        if is_complex:
-            safe_node_name = node_name.capitalize()
-            child_class_name = f"{parent_class_name}_{safe_node_name}"
-            define_class(child_class_name, description, label_text=safe_node_name)
-
-            unique_prop_name = sanitize_local_name(f"{parent_class_name}_has_{safe_node_name}")
-            define_object_property(
-                unique_prop_name,
-                parent_class_name,
-                child_class_name,
-                f"Property for {node_name} element",
-                label_text=safe_node_name,
-            )
-
-            for child in children:
-                process_node(child, child_class_name)
-        else:
-            xsd_type = map_xsd_type(sdf_type)
-            unique_prop_name = f"{parent_class_name}_{node_name}"
-            if node_type == "Attribute":
-                unique_prop_name += "_attr"
-            unique_prop_name = sanitize_local_name(unique_prop_name)
-            define_datatype_property(
-                unique_prop_name,
-                parent_class_name,
-                xsd_prefixed_to_uri(xsd_type),
-                description,
-                label_text=node_name,
-            )
-
-    for root in data:
-        process_node(root)
-
-    tree = ET.ElementTree(rdf_root)
-    if hasattr(ET, "indent"):
-        ET.indent(rdf_root, space="  ", level=0)
-    tree.write(output_file, encoding="utf-8", xml_declaration=True)
-    print(f"Ontology saved to {output_file}")
-
 def build_ontology(structure_file, output_file):
     with open(structure_file, "r", encoding="utf-8") as f:
         data = json.load(f)
@@ -501,6 +355,6 @@ def build_ontology(structure_file, output_file):
     print(f"Ontology saved to {output_file}")
 
 if __name__ == "__main__":
-    build_ontology("structure.json", "sdformat_model.ttl")
-    build_ontology_rdfxml("structure.json", "sdformat_model.owl")
-    build_ontology_rdfxml_edges_only("structure.json", "sdformat_model_edges.owl")
+    ONTOLOGY_OUT_DIR.mkdir(parents=True, exist_ok=True)
+    build_ontology(STRUCTURE_JSON_PATH, ONTOLOGY_OUT_DIR / "sdformat_model.ttl")
+    build_ontology_rdfxml(STRUCTURE_JSON_PATH, ONTOLOGY_OUT_DIR / "sdformat_model.owl")

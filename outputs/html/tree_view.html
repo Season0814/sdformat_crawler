@@ -157,7 +157,7 @@ function filterTree(root, q){
   });
 }
 async function init(){
-  const res=await fetch('structure.json');
+  const res=await fetch('../../data/merged/structure.json');
   const data=await res.json();
   const root=document.getElementById('root');
   root.innerHTML='';
@@ -170,4 +170,3 @@ init();
 </script>
 </body>
 </html>
-
